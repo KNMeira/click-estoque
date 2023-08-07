@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+html,
+body {
+   margin: 0;
+   padding: 0;
+}
+
+h4 {
+    color: #737373 !important ; 
+ }
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    /* ==== Colors ==== */
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #2196f3;
+    --primary-color-light: #E4E9F7;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+
+    /* ==== Transition ==== */
+    --tran-03: 0.2s  ease;
+    --tran-03: 0.3s ease;
+    --tran-04: 0.4s ease;
+    --tran-05: 0.5s ease;
+}
+
+.body{
+    height: 100vh;
+    background: var(--body-color) !important;
+    transition: var(--tran-04);
+    margin: 0px;
+}
+
+.dark{
+    --body-color: #18191A;
+    --sidebar-color: #242526;
+    --primary-color: #3A3B3C;
+    --primary-color-light: #3A3B3C;
+    --toggle-color: #FFF;
+    --text-color: #CCC;
+}
+

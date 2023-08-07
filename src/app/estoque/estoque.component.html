@@ -1,0 +1,44 @@
+<div class="ms-5 pt-5 ps-5 nav-justified body" [ngClass]="setDarkMode()">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#cadastrar-tab-pane"
+                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true">Cadastro de
+                Produtos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="listar-tab" data-bs-toggle="tab" data-bs-target="#listar-tab-pane"
+                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false">Listar
+                Estoque</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#editar-tab-pane"
+                type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Editar
+                Produtos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#entradas-tab-pane"
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Registrar
+                Entradas</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#saidas-tab-pane"
+                type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Registrar
+                Saídas</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="cadastrar-tab-pane" role="tabpanel" aria-labelledby="cadastrar-tab"
+            tabindex="0">
+            <app-cadastro-produtos-estoque></app-cadastro-produtos-estoque>
+        </div>
+        
+        <div class="tab-pane fade" id="listar-tab-pane" role="tabpanel" aria-labelledby="lista-tab" tabindex="0">
+            <app-lista-estoque></app-lista-estoque>
+        </div>
+
+        <div class="tab-pane fade" id="editar-tab-pane" role="tabpanel" aria-labelledby="editar-tab" tabindex="0">
+            <app-editar-produto-estoque></app-editar-produto-estoque>
+        </div>
+    </div>
+</div>

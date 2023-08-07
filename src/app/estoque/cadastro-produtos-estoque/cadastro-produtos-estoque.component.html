@@ -1,0 +1,72 @@
+<div>
+    <div class="text-center">
+
+        <h4 class="my-5">CADASTRO DE PRODUTOS</h4>
+
+        <form id="cadastroFormFornecedores" class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" class="form-control" type="text" name="fornecedor"
+                        id="fornecedor" placeholder=" ">
+                    <label for="fornecedor">PEÇA</label>
+                </div>
+
+<!--                             <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" id="idTamanho" name="tamanho">
+                    <label for="tamanho">TAMANHO DROPDOWN</label>
+                </div> -->
+
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect">
+                      <option selected>Selecione...</option>
+                      <option value="u">U</option>
+                      <option value="pp">PP</option>
+                      <option value="p">P</option>
+                      <option value="m">M</option>
+                      <option value="g">G</option>
+                      <option value="gg">GG</option>
+                      <option value="eg">EG</option>
+                    </select>
+                    <label for="floatingSelect">TAMANHO</label>
+                  </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="number" id="quantidadeProduto"
+                        name="quantidade">
+                    <label for="quantidade">QUANTIDADE</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect">
+                      <option selected>Selecione...</option>
+                    </select>
+                    <label for="floatingSelect">FORNECEDOR</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" name="valorCompra"
+                        id="idValorCompra">
+                    <label for="valorCompra">VALOR DE COMPRA</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" name="ValorVenda"
+                        id="idValorVenda" >
+                    <label for="ValorVenda">VALOR DE VENDA</label>
+                </div>
+
+                <div>
+                    <button class="btn btn-primary me-4" type="button"
+                        id="btnCadastrarUsuario">CADASTRAR</button>
+                    <button class="btn btn-secondary ms-4"
+                        id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
+                </div>
+            </div>
+
+            <div class="col-4"></div>
+
+        </form>
+    </div>
+</div>
