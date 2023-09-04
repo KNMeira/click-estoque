@@ -3,34 +3,39 @@
 
         <h4 class="my-5">CADASTRO DE USUÁRIOS</h4>
 
-        <form id="cadastroFormUsuario" class="row">
+        <form id="cadastroFormUsuario" class="row" [formGroup]="formUsuario">
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" name="usuario" id="usuario"
+                    <input class="form-control" class="form-control" type="text" formControlName="usuario" id="usuario"
                         placeholder=" ">
                     <label for="usuario">USUÁRIO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" id="cpf" name="cpf" placeholder=" ">
+                    <input class="form-control" type="text" id="cpf" formControlName="cpf" placeholder=" ">
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" id="emailFornecedor"
-                        name="emailFornecedor">
+                    <input class="form-control" placeholder=" " type="email" id="email"
+                    formControlName="email">
                     <label for="email">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" name="celularFornecedor"
-                        id="idCelularFornecedor">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular"
+                        id="celular">
                     <label for="celular">CELULAR</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="password" formControlName="senha"
+                        id="senha">
+                    <label for="senha">SENHA</label>
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario">CADASTRAR</button>
+                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" (click)="cadastrar()">CADASTRAR</button>
                     <button class="btn btn-secondary ms-4" id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
                 </div>
             </div>
