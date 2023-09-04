@@ -3,14 +3,14 @@
 
         <h4 class="my-5">CADASTRO DE PRODUTOS</h4>
 
-        <form id="cadastroFormFornecedores" class="row">
+        <form id="cadastroProdutos" class="row" [formGroup]="formProduto">
             <div class="col-4"></div>
             <div class="col-4">
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" name="fornecedor"
-                        id="fornecedor" placeholder=" ">
-                    <label for="fornecedor">PEÇA</label>
+                    <input class="form-control" class="form-control" type="text" name="peca"
+                        id="peca" placeholder=" " formControlName="peca">
+                    <label for="peca">PEÇA</label>
                 </div>
 
 <!--                             <div class="form-floating mb-3">
@@ -19,7 +19,7 @@
                 </div> -->
 
                   <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect">
+                    <select class="form-select" id="floatingSelect" formControlName="tamanho">
                       <option selected>Selecione...</option>
                       <option value="u">U</option>
                       <option value="pp">PP</option>
@@ -33,33 +33,33 @@
                   </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="number" id="quantidadeProduto"
+                    <input class="form-control" placeholder=" " type="number" id="quantidadeProduto" formControlName="quantidade"
                         name="quantidade">
                     <label for="quantidade">QUANTIDADE</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect">
-                      <option selected>Selecione...</option>
+                    <select class="form-select" id="floatingSelect" formControlName="id_fornecedor">
+                      <option selected>1</option>
                     </select>
                     <label for="floatingSelect">FORNECEDOR</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="text" name="valorCompra"
-                        id="idValorCompra">
+                        id="idValorCompra" formControlName="valor_compra">
                     <label for="valorCompra">VALOR DE COMPRA</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="text" name="ValorVenda"
-                        id="idValorVenda" >
+                        id="idValorVenda" formControlName="valor_venda" >
                     <label for="ValorVenda">VALOR DE VENDA</label>
                 </div>
 
                 <div>
                     <button class="btn btn-primary me-4" type="button"
-                        id="btnCadastrarUsuario">CADASTRAR</button>
+                        id="btnCadastrarUsuario" (click)="cadastrarProduto()">CADASTRAR</button>
                     <button class="btn btn-secondary ms-4"
                         id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
                 </div>
