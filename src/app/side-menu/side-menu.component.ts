@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
@@ -11,10 +12,17 @@ export class SideMenuComponent implements OnInit{
   public isDarkMode: boolean = false;
   public darkModeText: 'Modo Escuro' | 'Modo Claro' = 'Modo Escuro';
   
+  constructor(private router: Router){}
+  
   ngOnInit(): void {
-    localStorage.setItem('isDarkMode', this.isDarkMode.toString())  
+    localStorage.setItem('isDarkMode', this.isDarkMode.toString());
   }
 
+  public sair() {
+    sessionStorage.setItem('canAccess', 'false')
+    this.router.navigate(['/login'])
+  }
+  
   public sideMenuOpenChange() {
     this.sideMenuOpen = !this.sideMenuOpen;
   };

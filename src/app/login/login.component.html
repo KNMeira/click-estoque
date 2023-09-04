@@ -1,0 +1,27 @@
+<div class="body">
+
+    <div class="text-center ">
+        <img id="logoConsultoria" src="./assets/imagens/click-estoque5.png" alt="imagem de bem-vindos">
+    
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <form [formGroup]="formLogin" class="col-md-4">
+            <div class="form-floating mb-3">
+                <input class="form-control" placeholder=" " type="text" id="usuario" formControlName="usuario">
+                <label for="usuario">USUÁRIO</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" placeholder=" " type="password" id="senha" formControlName="senha">
+                <label for="senha">SENHA</label>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-primary me-4" type="button"
+                    id="btnLogin" (click)="login()">ENTRAR</button>
+                
+            </div>
+        
+        </form>
+    
+    </div>
+</div>

@@ -22,6 +22,10 @@ import { CadastrarUsuariosComponent } from './usuarios/cadastrar-usuarios/cadast
 import { EditarUsuariosComponent } from './usuarios/editar-usuarios/editar-usuarios.component';
 import { ListarUsuariosComponent } from './usuarios/listar-usuarios/listar-usuarios.component';
 import { SuporteComponent } from './suporte/suporte.component';
+import { RelatoriosComponent } from './relatorios/relatorios.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,11 +48,15 @@ import { SuporteComponent } from './suporte/suporte.component';
     CadastrarUsuariosComponent,
     EditarUsuariosComponent,
     ListarUsuariosComponent,
-    SuporteComponent
+    SuporteComponent,
+    RelatoriosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

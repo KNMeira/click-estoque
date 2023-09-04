@@ -50,7 +50,7 @@
                     </li>
                     <li class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right"
                         title="Relatórios Gerenciais">
-                        <a href="relatorios.html">
+                        <a routerLink="relatorios">
                             <i class='bx bxs-file icon'></i>
                             <span class="text nav-text">Relatórios</span>
                         </a>
@@ -83,8 +83,8 @@
             </div>
     
             <div class="bottom-content">
-                <li class="btn-sair" data-bs-toggle="tooltip" data-bs-placement="right" title="Sair">
-                    <a href="#">
+                <li class="btn-sair" data-bs-toggle="tooltip" data-bs-placement="right" title="Sair" (click)="sair()">
+                    <a>
                         <i class='bx bxs-log-out icon'></i>
                         <span class="text nav-text">Sair</span>
                     </a>
