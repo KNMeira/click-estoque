@@ -1,10 +1,60 @@
 <div>
     <div class="container row">
-        <div class="col-md-8"></div>
-        <form class="d-flex col-md-4 text-end mt-5">
-            <input class="form-control me-2" type="pesquisarEstoque" placeholder="Pesquisar"
-                aria-label="pesquisarEstoque">
-            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        <div class="col-md-4"></div>
+        <form class="d-flex col-md-8 text-center mt-5" [formGroup]="formBuscar">
+            <div class="form-floating col-3 me-2">
+                <select class="form-select" id="tipoBusca" formControlName="tipoBusca">
+                    <option value="usuario" selected>USUÁRIO</option>
+                    <option value="cpf">CPF</option>
+                    <option value="email">E-MAIL</option>
+                    <option value="celular">CELULAR</option>
+                </select>
+                <label for="tipoBusca">PESQUISAR</label>
+            </div>
+            <input class="form-control me-2" type="text" placeholder="Digite..." formControlName="filtro" (keyup)="changeFiltro()">
+            <button class="btn btn-outline-primary" type="button" (click)="buscarUsuario()">Buscar</button>
         </form>
+    </div>
+
+    <div class="container mt-5" *ngIf="isUserLoaded">
+        <form class="row" [formGroup]="formEditUsuario">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="form-floating mb-3">
+                    <input class="form-control" class="form-control" type="text" formControlName="usuario"
+                        placeholder=" ">
+                    <label for="usuario">USUÁRIO</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="cpf" placeholder=" ">
+                    <label for="cpf">CPF</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="email" formControlName="email">
+                    <label for="email">E-MAIL</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular">
+                    <label for="celular">CELULAR</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="password" formControlName="senha">
+                    <label for="senha">SENHA</label>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary me-4" type="button" (click)="salvarEdicao()" >SALVAR</button>
+                    <button class="btn btn-secondary ms-4" (click)="cancelarEdicao()">CANCELAR</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="text-center mt-5" *ngIf="!isUserLoaded">
+        {{ msgBusca }}
     </div>
 </div>

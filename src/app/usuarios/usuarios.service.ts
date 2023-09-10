@@ -13,4 +13,16 @@ export class UsuariosService {
     public cadastrar(usuario:any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/cadastro-usuario`, usuario);
     }
+
+    public getAllUsuarios(): Observable<any> {
+        return this.httpClient.get<any>(`${this.url}/usuarios`);
+    }
+
+    public getUsuario(filtro: any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/usuario`, filtro);
+    }
+
+    public editarUsuario(dadosUsuario: any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/editar-usuario`, dadosUsuario);
+    }
 }
