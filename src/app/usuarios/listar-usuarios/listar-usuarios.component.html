@@ -1,10 +1,34 @@
 <div>
-    <div class="container row">
+    <div class="container row mb-5">
         <div class="col-md-8"></div>
-        <form class="d-flex col-md-4 text-end mt-5">
-            <input class="form-control me-2" type="pesquisarEstoque" placeholder="Pesquisar"
-                aria-label="pesquisarEstoque">
-            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarUsuario">
+            <input class="form-control me-2" type="text" placeholder="Pesquisar" formControlName="filtro" (keyup)="filterUsuario()">
+            <button class="btn btn-outline-primary">Buscar</button>
         </form>
+    </div>
+
+    <div *ngIf="usuariosLoaded" class="container row text-center">
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>USUÁRIO</th>
+                        <th>CPF</th>
+                        <th>E-MAIL</th>
+                        <th>CELULAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>{{ usuario.usuario }}</td>
+                        <td>{{ usuario.cpf }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.celular }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
     </div>
 </div>
