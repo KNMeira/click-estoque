@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" id="cpf" formControlName="cpf" placeholder=" ">
+                    <input class="form-control" type="text" id="cpf" formControlName="cpf" placeholder=" " appCpfMask>
                     <label for="cpf">CPF</label>
                 </div>
 
@@ -36,7 +36,7 @@
 
                 <div>
                     <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" (click)="cadastrar()">CADASTRAR</button>
-                    <button class="btn btn-secondary ms-4" id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
+                    <button class="btn btn-secondary ms-4" id="btnCancelarUsuario" (click)="cancelar()">&nbsp;CANCELAR&nbsp;</button>
                 </div>
             </div>
 

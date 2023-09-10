@@ -26,6 +26,7 @@ import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CpfMaskDirective } from './directives/cpf-mask.directive';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HttpClientModule } from '@angular/common/http';
     ListarUsuariosComponent,
     SuporteComponent,
     RelatoriosComponent,
-    LoginComponent
+    LoginComponent,
+    CpfMaskDirective
   ],
   imports: [
     BrowserModule,

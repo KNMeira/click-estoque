@@ -22,6 +22,8 @@ export class CadastrarUsuariosComponent {
   public cadastrar() {
     if(this.formUsuario.valid){
       this.usuariosService.cadastrar(this.formUsuario.value).subscribe((res) => {
+        console.log(res);
+        
         alert(res.msg)
         this.formUsuario.reset();
       }) 
@@ -29,5 +31,9 @@ export class CadastrarUsuariosComponent {
        alert('Verifique se todos os campos estão preenchidos')
     }
     
+  }
+
+  public cancelar() {
+    this.formUsuario.reset();
   }
 }
