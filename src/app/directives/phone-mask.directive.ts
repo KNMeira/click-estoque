@@ -1,10 +1,9 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
 
-
 @Directive({
-  selector: '[appCpfMask]'
+  selector: '[appPhoneMask]'
 })
-export class CpfMaskDirective {
+export class PhoneMaskDirective {
 
   constructor(private el: ElementRef) {}
 
@@ -14,21 +13,16 @@ export class CpfMaskDirective {
     const value = input.value.replace(/\D/g, ''); // Remove non-digit characters
 
     if (value.length <= 11) {
-      input.value = this.formatCpf(value);
+      input.value = this.formatPhone(value);
     } else {
       
       input.value = value.slice(0, 11);
-      input.value = this.formatCpf(input.value) 
+      input.value = this.formatPhone(input.value) 
     }
   }
 
-  private formatCpf(value: string): string {
-    return value
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  private formatPhone(value: string): string {
+    return value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
   }
-
-  
 
 }

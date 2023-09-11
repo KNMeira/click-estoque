@@ -8,24 +8,24 @@
             <div class="col-4">
                 <div class="form-floating mb-3">
                     <input class="form-control" class="form-control" type="text" formControlName="usuario" id="usuario"
-                        placeholder=" ">
+                        placeholder=" "  [ngClass]="{'is-valid': this.formUsuario.get('usuario')?.value.length > 0, 'is-invalid': this.formUsuario.get('usuario')?.value.length == 0 && this.formUsuario.controls['usuario'].touched }" (keyup)="teste()">
                     <label for="usuario">USUÁRIO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" id="cpf" formControlName="cpf" placeholder=" " appCpfMask>
+                    <input class="form-control" [ngClass]="cpfValidation()" type="text" id="cpf" formControlName="cpf" placeholder=" " appCpfMask >
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="email" id="email"
-                    formControlName="email">
+                    formControlName="email" [ngClass]="{'is-valid': this.formUsuario.controls['email'].valid, 'is-invalid':this.formUsuario.controls['email'].invalid && this.formUsuario.controls['email'].touched }">
                     <label for="email">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="tel" formControlName="celular"
-                        id="celular">
+                        id="celular" appPhoneMask [ngClass]="phoneValidation()">
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">

@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CpfMaskDirective } from './directives/cpf-mask.directive';
+import { PhoneMaskDirective } from './directives/phone-mask.directive';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { CpfMaskDirective } from './directives/cpf-mask.directive';
     SuporteComponent,
     RelatoriosComponent,
     LoginComponent,
-    CpfMaskDirective
+    CpfMaskDirective,
+    PhoneMaskDirective
   ],
   imports: [
     BrowserModule,
