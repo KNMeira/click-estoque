@@ -1,6 +1,6 @@
 const express = require('express')
 var bodyParser = require('body-parser');
-const cors = require('cors');   
+const cors = require('cors');
 
 const { Client } = require('pg')
 
@@ -19,7 +19,7 @@ const connection = {
     database: 'bd_exito',
     password: 'click123',
     port: 5432,
-    ssl: {rejectUnauthorized: false}
+    ssl: { rejectUnauthorized: false }
 }
 
 
@@ -64,6 +64,34 @@ app.post('/usuario', (req, res) => {
 
 app.post('/editar-usuario', (req, res) => {
     editUsuario(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/cadastro-fornecedor', (req, res) => {
+    saveFornecedor(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.get('/fornecedores', (req, res) => {
+    getAllFornecedores().then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/fornecedor', (req, res) => {
+    getFornecedor(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/editar-fornecedor', (req, res) => {
+    editFornecedor(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
         res.send(responseJson)
     })
@@ -168,7 +196,7 @@ async function editUsuario(usuario) {
 async function getAllUsuarios() {
     const client = new Client(connection)
     await client.connect()
-    res = await client.query('SELECT * FROM usuarios')
+    res = await client.query('SELECT * FROM usuarios ORDER BY usuario')
     await client.end()
 
     return res.rows
@@ -182,4 +210,71 @@ async function getUsuario(dadosFiltro) {
     res = await client.query(`SELECT * FROM usuarios WHERE ${columnName} = $1`, values)
     await client.end()
     return res.rows
+}
+
+//fornecedores
+async function saveFornecedor(fornecedor) {
+    const values = [fornecedor.fornecedor, fornecedor.cnpj, fornecedor.endereco, fornecedor.email, fornecedor.celular];
+    const client = new Client(connection)
+    await client.connect()
+
+    const valuesVerify = [fornecedor.cnpj]
+    let verificaSingularidade = await client.query('SELECT * FROM fornecedores WHERE cnpj = $1', valuesVerify);
+
+    let response
+    if (verificaSingularidade.rowCount > 0) {
+        response = { status: 400, msg: 'CNPJ já cadastrado' }
+    } else {
+        const res = await client.query(`INSERT INTO fornecedores(fornecedor, cnpj, endereco, email, celular) VALUES ($1, $2, $3, $4, $5)`, values)
+        await client.end()
+
+        if (res.rowCount > 0) {
+            response = { status: 201, msg: 'Fornecedor cadastrado com sucesso' }
+        } else {
+            response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
+        }
+    }
+
+    return response
+}
+
+async function getAllFornecedores() {
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT * FROM fornecedores ORDER BY fornecedor')
+    await client.end()
+
+    return res.rows
+}
+
+async function getFornecedor(filtro) {
+    const client = new Client(connection)
+    await client.connect()
+    const values = [filtro.cnpj];
+    res = await client.query(`SELECT * FROM fornecedores WHERE cnpj = $1`, values)
+    await client.end()
+    return res.rows
+}
+
+async function editFornecedor(fornecedor) {
+
+    const values = [fornecedor.fornecedor, fornecedor.endereco, fornecedor.email, fornecedor.celular, fornecedor.cnpj];
+    const client = new Client(connection)
+    await client.connect()
+
+    let response
+
+    const res = await client.query(`UPDATE fornecedores SET fornecedor = $1, endereco = $2, email = $3, celular = $4 WHERE cnpj = $5`, values)
+    await client.end()
+
+    if (res.rowCount > 0) {
+        response = { status: 201, msg: 'Edição salva com sucesso' }
+    } else {
+        response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
+    }
+
+
+    return response
+
+
 }
