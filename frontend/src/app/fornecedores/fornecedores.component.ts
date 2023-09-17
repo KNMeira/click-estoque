@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./fornecedores.component.scss']
 })
 export class FornecedoresComponent {
+  public selectedTab = 0;
 
   public setDarkMode(){
     let isDarkMode = localStorage.getItem('isDarkMode');
@@ -13,4 +14,7 @@ export class FornecedoresComponent {
     return isDarkMode == 'true' ? 'dark' : '';
   };
 
+  changeSelectedTab(tab: number){
+    this.selectedTab = tab;
+  }
 }
