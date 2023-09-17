@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" formControlName="cpf" placeholder=" ">
+                    <input class="form-control" type="text" formControlName="cpf" placeholder=" " appCpfMask>
                     <label for="cpf">CPF</label>
                 </div>
 
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" appPhoneMask [ngClass]="phoneValidation()">
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">

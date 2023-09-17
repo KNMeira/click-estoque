@@ -14,7 +14,7 @@ export class EditarUsuariosComponent {
   public msgBusca = 'Ultilize o filtro para buscar o usuário que deseja editar'
 
   public formBuscar: FormGroup = new FormGroup({
-    tipoBusca: new FormControl('', Validators.required),
+    tipoBusca: new FormControl('usuario', Validators.required),
     filtro: new FormControl('', Validators.required)
   })
 
@@ -29,8 +29,9 @@ export class EditarUsuariosComponent {
   constructor(private usuarioService: UsuariosService) { }
 
   public buscarUsuario() {
-    if(this.formBuscar.get('filtro')?.value == '') {
+    if (this.formBuscar.get('filtro')?.value == '' || this.formBuscar.get('tipoBusca')?.value == '') {
       alert('Preencha o filtro de busca')
+      this.formEditUsuario.controls['celular'].dirty
       return;
     }
 
@@ -65,6 +66,15 @@ export class EditarUsuariosComponent {
 
   public changeFiltro() {
     const filtro = this.formBuscar.get('filtro')?.value;
-    if(filtro == '') this.isUserLoaded = false;
+    if (filtro == '') this.isUserLoaded = false;
+  }
+
+  public phoneValidation() {
+    if (this.formEditUsuario.controls['celular'].dirty) {
+      if (this.formEditUsuario.get('celular')?.value.length >= 1 && this.formEditUsuario.get('celular')?.value.length < 14) return 'is-invalid'
+      if (this.formEditUsuario.get('celular')?.value.length >= 14) return 'is-valid'
+      return
+    }
+    return ''
   }
 }

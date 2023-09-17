@@ -2,28 +2,28 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#cadastrar-tab-pane"
-                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true">Cadastrar Usuários</button>
+                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true" (click)="changeSelectedTab(0)">Cadastrar Usuários</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="listar-tab" data-bs-toggle="tab" data-bs-target="#listar-tab-pane"
-                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false">Listar Usuários</button>
+                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false" (click)="changeSelectedTab(1)">Listar Usuários</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="editar-tab" data-bs-toggle="tab" data-bs-target="#editar-tab-pane"
-                type="button" role="tab" aria-controls="editar-tab-pane" aria-selected="false">Editar Usuários</button>
+                type="button" role="tab" aria-controls="editar-tab-pane" aria-selected="false" (click)="changeSelectedTab(2)">Editar Usuários</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="cadastrar-tab-pane" role="tabpanel" aria-labelledby="cadastrar-tab"
         tabindex="0">
-            <app-cadastrar-usuarios></app-cadastrar-usuarios>
+            <app-cadastrar-usuarios *ngIf="selectedTab == 0"></app-cadastrar-usuarios>
         </div>
         
-        <div class="tab-pane fade" id="listar-tab-pane" role="tabpanel" aria-labelledby="listar-tab" tabindex="0">
-            <app-listar-usuarios></app-listar-usuarios>
+        <div class="tab-pane fade" id="listar-tab-pane" role="tabpanel" aria-labelledby="listar-tab" tabindex="1">
+            <app-listar-usuarios *ngIf="selectedTab == 1"></app-listar-usuarios>
         </div>
 
-        <div class="tab-pane fade" id="editar-tab-pane" role="tabpanel" aria-labelledby="editar-tab" tabindex="0">
-            <app-editar-usuarios></app-editar-usuarios>
+        <div class="tab-pane fade" id="editar-tab-pane" role="tabpanel" aria-labelledby="editar-tab" tabindex="2">
+            <app-editar-usuarios *ngIf="selectedTab == 2"></app-editar-usuarios>
         </div>
     </div>

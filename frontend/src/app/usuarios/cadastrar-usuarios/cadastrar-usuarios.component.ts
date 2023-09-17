@@ -19,12 +19,6 @@ export class CadastrarUsuariosComponent {
 
   constructor(private usuariosService: UsuariosService) {}
 
-  public teste() {
-console.log(this.formUsuario);
-console.log(this.formUsuario.controls['usuario'].touched);
-
-    
-  }
   public cadastrar() {
     if(this.formUsuario.valid){
       this.usuariosService.cadastrar(this.formUsuario.value).subscribe((res) => {

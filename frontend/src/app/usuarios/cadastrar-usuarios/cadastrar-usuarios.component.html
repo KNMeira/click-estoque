@@ -8,7 +8,7 @@
             <div class="col-4">
                 <div class="form-floating mb-3">
                     <input class="form-control" class="form-control" type="text" formControlName="usuario" id="usuario"
-                        placeholder=" "  [ngClass]="{'is-valid': this.formUsuario.get('usuario')?.value.length > 0, 'is-invalid': this.formUsuario.get('usuario')?.value.length == 0 && this.formUsuario.controls['usuario'].touched }" (keyup)="teste()">
+                        placeholder=" "  [ngClass]="{'is-valid': this.formUsuario.get('usuario')?.value.length > 0, 'is-invalid': this.formUsuario.get('usuario')?.value.length == 0 && this.formUsuario.controls['usuario'].touched }">
                     <label for="usuario">USUÁRIO</label>
                 </div>
 

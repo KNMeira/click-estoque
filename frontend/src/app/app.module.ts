@@ -28,6 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CpfMaskDirective } from './directives/cpf-mask.directive';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
+import { CnpjMaskDirective } from './directives/cnpj-mask.directive';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
     RelatoriosComponent,
     LoginComponent,
     CpfMaskDirective,
+    CnpjMaskDirective,
     PhoneMaskDirective
   ],
   imports: [
