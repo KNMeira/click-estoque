@@ -13,4 +13,20 @@ export class EstoqueService {
     public saveProduto(produto:any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/cadastro-produto`, produto);
     }
+
+    public getFornecedores(): Observable<any> {
+        return this.httpClient.get<any>(`${this.url}/fornecedores`);
+    }
+
+    public getEstoque(): Observable<any> {
+        return this.httpClient.get<any>(`${this.url}/estoque`);
+    }
+
+    public getPeca(codigo:any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/peca`, codigo);
+    }
+
+    public editProduto(produto:any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/editar-produto`, produto);
+    }
 }

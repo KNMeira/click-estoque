@@ -97,6 +97,27 @@ app.post('/editar-fornecedor', (req, res) => {
     })
 })
 
+app.get('/estoque', (req, res) => {
+    getEstoque().then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/peca', (req, res) => {
+    getPeca(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/editar-produto', (req, res) => {
+    editProduto(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 //login
 async function verificaLogin(dadosLogin) {
     const values = [dadosLogin.usuario, dadosLogin.senha];
@@ -138,6 +159,44 @@ async function saveProduto(produto) {
     }
 
     return response;
+}
+
+async function getPeca(filtro) {
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT * FROM produtos WHERE id_peca = $1', [filtro.cod])
+    await client.end()
+    return res.rows
+}
+
+async function getEstoque() {
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT p.peca, p.id_peca, p.tamanho, p.valor_compra, p.valor_venda, p.quantidade, f.fornecedor FROM  produtos p, fornecedores f WHERE f.id = p.id_fornecedor ORDER BY p.id_peca')
+    await client.end()
+
+    return res.rows
+}
+
+async function editProduto(produto){
+    const values = [produto.peca, produto.tamanho, produto.valor_compra, produto.valor_venda, produto.quantidade, produto.id_fornecedor, produto.id_peca]
+    console.log(values);
+
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('UPDATE produtos SET peca = $1, tamanho = $2, valor_compra = $3, valor_venda = $4, quantidade = $5, id_fornecedor = $6 WHERE id_peca = $7', values)
+    await client.end()
+    console.log(res);
+
+    let response
+    if (res.rowCount > 0) {
+        response = { status: 201, msg: 'Edição salva com sucesso' }
+    } else {
+        response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
+    }
+
+    return response
+
 }
 
 //usuarios

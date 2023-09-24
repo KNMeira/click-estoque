@@ -1,10 +1,82 @@
 <div>
     <div class="container row">
         <div class="col-md-8"></div>
-        <form class="d-flex col-md-4 text-end mt-5">
-            <input class="form-control me-2" type="pesquisarEstoque" placeholder="Pesquisar"
+        <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarPeca">
+            <input class="form-control me-2" formControlName="filtro" type="pesquisarEstoque" placeholder="Pesquisar Código"
                 aria-label="pesquisarEstoque">
-            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+            <button class="btn btn-outline-primary" type="button" (click)="pesquisarPeca()">Buscar</button>
         </form>
+    </div>
+
+    <div class="container mt-5" *ngIf="isProdutoLoaded">
+        <form class="row" [formGroup]="formEditProduto">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="form-floating mb-3">
+                    <input class="form-control" class="form-control" type="text" name="id_peca"
+                        id="id_peca" placeholder=" " formControlName="id_peca" [ngClass]="{'is-valid': this.formEditProduto.get('id_peca')?.value.length > 0, 'is-invalid': this.formEditProduto.get('id_peca')?.value.length == 0 && this.formEditProduto.controls['id_peca'].touched }">
+                    <label for="id_peca">CÓD. PEÇA</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" class="form-control" type="text" name="peca"
+                        id="peca" placeholder=" " formControlName="peca" [ngClass]="{'is-valid': this.formEditProduto.get('peca')?.value.length > 0 && this.formEditProduto.controls['peca'].touched, 'is-invalid': this.formEditProduto.get('peca')?.value.length == 0 && this.formEditProduto.controls['peca'].touched }">
+                    <label for="peca">PEÇA</label>
+                </div>
+
+<!--                             <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" id="idTamanho" name="tamanho">
+                    <label for="tamanho">TAMANHO DROPDOWN</label>
+                </div> -->
+
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" formControlName="tamanho" [ngClass]="{'is-valid': this.formEditProduto.get('tamanho')?.value.length > 0 && this.formEditProduto.controls['tamanho'].touched, 'is-invalid': this.formEditProduto.get('tamanho')?.value.length == 0 && this.formEditProduto.controls['tamanho'].touched }" >
+                      <option selected>Selecione...</option>
+                      <option value="u">U</option>
+                      <option value="pp">PP</option>
+                      <option value="p">P</option>
+                      <option value="m">M</option>
+                      <option value="g">G</option>
+                      <option value="gg">GG</option>
+                      <option value="eg">EG</option>
+                    </select>
+                    <label for="floatingSelect">TAMANHO</label>
+                  </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" id="quantidadeProduto" formControlName="quantidade"
+                        name="quantidade" [ngClass]="{'is-valid': this.formEditProduto.get('quantidade')?.value != '' && this.formEditProduto.controls['quantidade'].touched, 'is-invalid': this.formEditProduto.get('quantidade')?.value == '' && this.formEditProduto.controls['quantidade'].touched }">
+                    <label for="quantidade">QUANTIDADE</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" formControlName="id_fornecedor" [ngClass]="{'is-valid': this.formEditProduto.get('id_fornecedor')?.value.length > 0 && this.formEditProduto.controls['id_fornecedor'].touched , 'is-invalid': this.formEditProduto.get('id_fornecedor')?.value.length == 0 && this.formEditProduto.controls['id_fornecedor'].touched }">
+                      <option *ngFor="let fornecedor of fornecedoresOptions" value ="{{fornecedor.id}}">{{fornecedor.value}}</option>
+                    </select>
+                    <label for="floatingSelect">FORNECEDOR</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" name="valorCompra" ng-pattern="^[0-9]*$"
+                        id="idValorCompra" formControlName="valor_compra" [ngClass]="{'is-valid': this.formEditProduto.get('valor_compra')?.value != '' && this.formEditProduto.controls['valor_compra'].touched, 'is-invalid': this.formEditProduto.get('valor_compra')?.value == '' && this.formEditProduto.controls['valor_compra'].touched }">
+                    <label for="valorCompra">VALOR DE COMPRA</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" name="ValorVenda"
+                        id="idValorVenda" formControlName="valor_venda" [ngClass]="{'is-valid': this.formEditProduto.get('valor_venda')?.value != '' && this.formEditProduto.controls['valor_venda'].touched, 'is-invalid': this.formEditProduto.get('valor_venda')?.value == '' && this.formEditProduto.controls['valor_venda'].touched }" >
+                    <label for="ValorVenda">VALOR DE VENDA</label>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary me-4" type="button" (click)="editProduto()">SALVAR</button>
+                    <button class="btn btn-secondary ms-4" (click)="cancelarEdicao()">CANCELAR</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="text-center mt-5" *ngIf="!isProdutoLoaded">
+        {{ msgBusca }}
     </div>
 </div>

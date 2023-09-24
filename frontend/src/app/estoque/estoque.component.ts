@@ -6,11 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./estoque.component.scss']
 })
 export class EstoqueComponent {
+  public selectedTab = 0;
 
   public setDarkMode(){
     let isDarkMode = localStorage.getItem('isDarkMode');
 
     return isDarkMode == 'true' ? 'dark' : '';
   };
+
+  changeSelectedTab(tab: number){
+    this.selectedTab = tab;
+  }
 
 }
