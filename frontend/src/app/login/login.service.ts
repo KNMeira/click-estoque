@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class LoginService {
-    private url = "http://18.191.107.73:3000"
+    private url = "https://ec2-18-191-107-73.us-east-2.compute.amazonaws.com.sslip.io"
 
     constructor(private httpClient: HttpClient) { }
 
