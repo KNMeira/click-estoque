@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class FornecedoresService {
-    private url = "http://localhost:3000"
+    private url = "http://18.191.107.73:3000"
 
     constructor(private httpClient: HttpClient) { }
 
