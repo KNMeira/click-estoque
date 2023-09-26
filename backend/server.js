@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 const express = require('express')
 var bodyParser = require('body-parser');
 const cors = require('cors');
@@ -105,7 +107,7 @@ app.get('/estoque', (req, res) => {
 })
 
 app.post('/peca', (req, res) => {
-    getPeca(req.body).then((response) => {
+    getPeca(req.body.cod).then((response) => {
         let responseJson = JSON.stringify(response)
         res.send(responseJson)
     })
@@ -113,6 +115,13 @@ app.post('/peca', (req, res) => {
 
 app.post('/editar-produto', (req, res) => {
     editProduto(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/registrar-entradas', (req, res) => {
+    registrarEntradas(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
         res.send(responseJson)
     })
@@ -161,10 +170,10 @@ async function saveProduto(produto) {
     return response;
 }
 
-async function getPeca(filtro) {
+async function getPeca(cod) {
     const client = new Client(connection)
     await client.connect()
-    res = await client.query('SELECT * FROM produtos WHERE id_peca = $1', [filtro.cod])
+    res = await client.query('SELECT * FROM produtos WHERE id_peca = $1', [cod])
     await client.end()
     return res.rows
 }
@@ -178,7 +187,7 @@ async function getEstoque() {
     return res.rows
 }
 
-async function editProduto(produto){
+async function editProduto(produto) {
     const values = [produto.peca, produto.tamanho, produto.valor_compra, produto.valor_venda, produto.quantidade, produto.id_fornecedor, produto.id_peca]
     console.log(values);
 
@@ -197,6 +206,18 @@ async function editProduto(produto){
 
     return response
 
+}
+
+async function registrarEntradas(entradas) {
+    const hasEntrada = await registraLog(entradas, 'E');
+
+    if (!hasEntrada) {
+        return { status: 400, msg: 'Não há entradas para cadastrar.' }
+    } else {
+        let res = await atualizaQntProduto(entradas, '+');
+        console.log('response registrar entrada ', res);
+        return res 
+    }
 }
 
 //usuarios
@@ -334,6 +355,96 @@ async function editFornecedor(fornecedor) {
 
 
     return response
+
+
+}
+
+async function registraLog(obj, evento) {
+    let arrayIds = [];
+    let arrayQnt = [];
+    Object.keys(obj).forEach((id) => {
+        arrayIds.push(id)
+    })
+
+    Object.values(obj).forEach((qnt) => {
+        arrayQnt.push(qnt)
+    })
+
+    let queryStringLog = `INSERT INTO entradas_saidas_logs (data, evento, id_peca, qtd) VALUES `;
+    let valuesToInsert = [];
+
+    arrayQnt.forEach((qnt, i) => {
+        if (qnt > 0) {
+            let value = `('${moment().format('YYYY-MM-DD')}', '${evento}', ${arrayIds[i]}, ${qnt}), `
+            valuesToInsert.push(value);
+        }
+    })
+
+    if (valuesToInsert.length > 0) {
+        valuesToInsert.forEach(value => {
+            queryStringLog = queryStringLog + value;
+        });
+        queryStringLog = queryStringLog.slice(0, queryStringLog.length - 2);
+
+        const client = new Client(connection)
+        await client.connect()
+
+        res = await client.query(queryStringLog)
+        await client.end()
+
+        if (res.rowCount > 0) {
+            response = { status: 201, msg: 'LOG cadastrado com sucesso' }
+        } else {
+            response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
+        }
+
+        return true
+
+
+    } else {
+        return false
+    }
+}
+
+async function atualizaQntProduto(obj, operacao) {
+    let arrayIds = [];
+    let arrayQnt = [];
+    Object.keys(obj).forEach((id) => {
+        arrayIds.push(id)
+    })
+
+    Object.values(obj).forEach((qnt) => {
+        arrayQnt.push(qnt)
+    })
+    console.log(arrayIds, arrayQnt);
+
+    arrayQnt.forEach(async (qnt, i) => {
+        if (qnt > 0) {
+            let peca = await getPeca(arrayIds[i]);
+            let qntAtt = (peca[0].quantidade + qnt);
+
+            const values = [qntAtt, arrayIds[i]];
+            console.log(values);
+            queryUpdate = `UPDATE produtos SET quantidade = $1 WHERE id_peca = $2`;
+
+            const client = new Client(connection)
+            await client.connect()
+
+            res = await client.query(queryUpdate, values)
+            await client.end()
+            
+            let response;
+
+            if (res.rowCount > 0) {
+                response = { status: 201, msg: 'Entradas atualizadas com sucesso' }
+                return response
+            } else {
+                response = { status: 500, msg: 'Erro inesperado, tente novamente' }
+                return response
+
+            }
+        }
+    })
 
 
 }

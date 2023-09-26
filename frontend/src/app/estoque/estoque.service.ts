@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class EstoqueService {
-    private url = "http://localhost:3000"
+    private url = "http://18.191.107.73:3000"
 
     constructor(private httpClient: HttpClient) { }
 
@@ -28,5 +28,9 @@ export class EstoqueService {
 
     public editProduto(produto:any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/editar-produto`, produto);
+    }
+
+    public registrarEntradas(entradas:any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/registrar-entradas`, entradas);
     }
 }

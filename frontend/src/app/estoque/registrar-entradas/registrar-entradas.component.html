@@ -1,0 +1,40 @@
+<div class="container">
+    <!--  <div>
+        <div *ngFor="let peca of pecas" class="row mb-3">
+            <div class="col-2">
+                <label for="{{peca.id_peca}}"> {{peca.peca}}</label>
+            </div>
+            <div class="col-1">
+                <input class="form-control me-2"  type="number" id="{{peca.id_peca}}">
+            </div>
+        </div>
+    </div> -->
+
+    <div class="mt-5">
+        <table class="text-center table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Cód.</th>
+                    <th>Produto</th>
+                    <th>Fornecedor</th>
+                    <th>Qnt. Entrada</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let peca of pecas">
+                    <td>{{peca.id_peca}}</td>
+                    <td>{{peca.peca}}</td>
+                    <td>{{peca.fornecedor}}</td>
+                    <td [formGroup]="formRegistrarEntradas">
+                        <input class="text-center form-control" type="number" step="1" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" formControlName="{{peca.id_peca}}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center ">
+        <button class="btn btn-primary" (click)="registrarEntradas()">Registrar Entrada</button>
+    </div>
+</div>

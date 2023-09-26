@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CpfMaskDirective } from './directives/cpf-mask.directive';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { CnpjMaskDirective } from './directives/cnpj-mask.directive';
+import { RegistrarEntradasComponent } from './estoque/registrar-entradas/registrar-entradas.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CnpjMaskDirective } from './directives/cnpj-mask.directive';
     LoginComponent,
     CpfMaskDirective,
     CnpjMaskDirective,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    RegistrarEntradasComponent
   ],
   imports: [
     BrowserModule,
