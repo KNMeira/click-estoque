@@ -68,7 +68,11 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary me-4" type="button" (click)="editProduto()">SALVAR</button>
+                    <button class="btn btn-primary me-4" type="button" (click)="editProduto()">
+                        <span *ngIf="!isLoadingSalvar">SALVAR</span>
+                        <img *ngIf="isLoadingSalvar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
+
+                    </button>
                     <button class="btn btn-secondary ms-4" (click)="cancelarEdicao()">CANCELAR</button>
                 </div>
             </div>
@@ -76,7 +80,13 @@
 
     </div>
 
-    <div class="text-center mt-5" *ngIf="!isProdutoLoaded">
+    <div class="text-center mt-5" *ngIf="!isProdutoLoaded && !loading">
         {{ msgBusca }}
     </div>
+
+
+        <div class="text-center mt-5" *ngIf="!isProdutoLoaded && loading">
+            <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+            <p>Buscando</p>
+        </div>
 </div>

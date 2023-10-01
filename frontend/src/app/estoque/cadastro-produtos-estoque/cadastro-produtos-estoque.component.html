@@ -59,9 +59,13 @@
 
                 <div>
                     <button class="btn btn-primary me-4" type="button"
-                        id="btnCadastrarUsuario" (click)="cadastrarProduto()" [disabled]="this.formProduto.invalid">CADASTRAR</button>
+                        id="btnCadastrarUsuario" (click)="cadastrarProduto()" [disabled]="this.formProduto.invalid">
+                        <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
+                        <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
+
+                    </button>
                     <button class="btn btn-secondary ms-4"
-                        id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
+                        id="btnCancelarUsuario" (click)="logForm()">&nbsp;CANCELAR&nbsp;</button>
                 </div>
             </div>
 

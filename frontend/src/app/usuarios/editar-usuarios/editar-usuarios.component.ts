@@ -11,7 +11,9 @@ export class EditarUsuariosComponent {
 
   public user = {}
   public isUserLoaded: boolean = false;
+  public loading: boolean = false;
   public msgBusca = 'Ultilize o filtro para buscar o usuário que deseja editar'
+  public isLoadingSalvar: boolean = false;
 
   public formBuscar: FormGroup = new FormGroup({
     tipoBusca: new FormControl('usuario', Validators.required),
@@ -34,7 +36,8 @@ export class EditarUsuariosComponent {
       this.formEditUsuario.controls['celular'].dirty
       return;
     }
-
+    this.isUserLoaded = false;
+    this.loading = true;
     this.usuarioService.getUsuario(this.formBuscar.value).subscribe((usuario) => {
       if (usuario[0]) {
         this.user = usuario[0]
@@ -45,6 +48,8 @@ export class EditarUsuariosComponent {
         this.msgBusca = 'Nenhum resultado encontrado'
         //        alert(`Nenhum resultado encontrado`)
       }
+      this.loading = false;
+
     })
   }
 
@@ -58,8 +63,11 @@ export class EditarUsuariosComponent {
   }
 
   public salvarEdicao() {
+    this.isLoadingSalvar = true;
     this.usuarioService.editarUsuario(this.formEditUsuario.value).subscribe((res) => {
       alert(res.msg)
+    this.isLoadingSalvar = false;
+
     })
 
   }

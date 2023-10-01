@@ -16,11 +16,12 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
     tamanho: new FormControl('', Validators.required),
     quantidade: new FormControl('', Validators.required),
     id_fornecedor: new FormControl('', Validators.required),
-    valor_compra: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
+    valor_compra: new FormControl('', [Validators.required]),
     valor_venda: new FormControl('', Validators.required)
   })
 
   public fornecedoresOptions: any = [];
+  public isLoadingCadastrar: boolean = false;
 
   constructor(private estoqueService: EstoqueService) { }
   ngOnInit(): void {
@@ -28,9 +29,11 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
   }
 
   public cadastrarProduto() {
+    this.isLoadingCadastrar = true;
     console.log(this.formProduto.value);
 
     this.estoqueService.saveProduto(this.formProduto.value).subscribe((res) => {
+      this.isLoadingCadastrar = false;
       alert(res.msg)
     });
   }
@@ -53,4 +56,8 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
     debugger
   }
 
+  public logForm() {
+    console.log(this.formProduto)
+  }
+  
 }

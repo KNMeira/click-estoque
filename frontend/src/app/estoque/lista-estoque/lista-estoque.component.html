@@ -7,7 +7,7 @@
             <button class="btn btn-outline-primary" type="submit">Buscar</button>
         </form>
     </div>
-    <div *ngIf="estoqueLoaded" class="container row text-center">
+    <div *ngIf="estoqueLoaded; else loading" class="container row text-center">
         <div>
             <table class="table table-striped table-hover">
                 <thead>
@@ -37,4 +37,12 @@
         </div>
 
     </div>
+
+    <ng-template #loading>
+        <div class="text-center mt-5">
+            <img src="../../../assets/imagens/loading-pulse.gif" width="auto" height="100px" alt="">
+            <p>Carregando</p>
+        </div>
+
+    </ng-template>
 </div>

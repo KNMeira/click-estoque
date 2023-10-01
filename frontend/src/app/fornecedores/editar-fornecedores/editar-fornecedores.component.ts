@@ -22,7 +22,9 @@ export class EditarFornecedoresComponent {
   })
 
   public fornecedor = [];
+  public isLoadingSalvar = false;
   public isFornecedorLoaded = false;
+  public loading = false;
   public msgBusca = 'Ultilize o filtro para buscar o CNPJ do fornecedor que deseja editar'
 
   constructor(private fornecedoresService: FornecedoresService) {}
@@ -33,6 +35,8 @@ export class EditarFornecedoresComponent {
       this.formEditFornecedor.controls['celular'].dirty
       return;
     }
+    this.loading = true;
+    this.isFornecedorLoaded = false
 
     this.fornecedoresService.getFornecedor(this.formPesquisarFornecedor.value).subscribe((fornecedor) => {
       if (fornecedor[0]) {
@@ -44,16 +48,20 @@ export class EditarFornecedoresComponent {
         this.msgBusca = 'Nenhum resultado encontrado'
         //        alert(`Nenhum resultado encontrado`)
       }
+    this.loading = false;
+
     })
   }
 
   public editFornecedor() {
+    this.isLoadingSalvar = true;
     const data = {
       ...this.formEditFornecedor.value,
       cnpj: this.formEditFornecedor.get('cnpj')?.value
     }
     this.fornecedoresService.editFornecedor(data).subscribe( (data) => {
       alert(data.msg)
+      this.isLoadingSalvar = false;
     })
   }
 

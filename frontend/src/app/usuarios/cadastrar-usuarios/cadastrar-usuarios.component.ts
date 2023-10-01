@@ -17,20 +17,25 @@ export class CadastrarUsuariosComponent {
     senha: new FormControl('', [Validators.required,]),
   })
 
-  constructor(private usuariosService: UsuariosService) {}
+  public isLoadingCadastrar: boolean = false;
+
+  constructor(private usuariosService: UsuariosService) { }
 
   public cadastrar() {
-    if(this.formUsuario.valid){
+    this.isLoadingCadastrar = true;
+
+    if (this.formUsuario.valid) {
       this.usuariosService.cadastrar(this.formUsuario.value).subscribe((res) => {
         console.log(res);
-        
+        this.isLoadingCadastrar = false;
+
         alert(res.msg)
         this.formUsuario.reset();
-      }) 
+      })
     } else {
-       alert('Verifique se todos os campos estão preenchidos')
+      alert('Verifique se todos os campos estão preenchidos')
     }
-    
+
   }
 
   public cancelar() {

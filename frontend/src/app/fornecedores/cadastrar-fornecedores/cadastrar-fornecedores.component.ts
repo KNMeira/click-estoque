@@ -16,12 +16,15 @@ export class CadastrarFornecedoresComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     celular: new FormControl('', [Validators.required, Validators.maxLength(16)]),
   })
+  public isLoadingCadastrar: boolean = false;
 
   constructor(private fornecedoresService: FornecedoresService) { }
 
   public cadastrar() {
+    this.isLoadingCadastrar = true;
     this.fornecedoresService.saveFornecedor(this.formFornecedores.value).subscribe((data) => {
       alert(data.msg);
+      this.isLoadingCadastrar = false;
     }
     );
   }

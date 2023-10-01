@@ -16,6 +16,9 @@ export class EditarProdutoEstoqueComponent implements OnInit{
   public fornecedoresOptions:any =[]
   public msgBusca: string = "Ultilize o filtro para buscar o Código da peça que deseja editar" 
   public isProdutoLoaded: boolean = false;
+  public loading: boolean = false;
+  public isLoadingSalvar: boolean = false;
+  
   public produto: any;  
   public formEditProduto: FormGroup = new FormGroup({
     peca: new FormControl('', Validators.required),
@@ -39,7 +42,8 @@ export class EditarProdutoEstoqueComponent implements OnInit{
       alert('Preencha o filtro de busca')
       return;
     }
-
+    this.isProdutoLoaded = false;
+    this.loading = true;
     const data = {
       cod: this.formPesquisarPeca.get('filtro')?.value
     }
@@ -54,10 +58,12 @@ export class EditarProdutoEstoqueComponent implements OnInit{
         this.isProdutoLoaded = false
         this.msgBusca = 'Nenhum resultado encontrado'
       }      
+      this.loading = false;
     })
   }
   
   public editProduto() {
+    this.isLoadingSalvar = true;
     let data = {
       ...this.formEditProduto.value,
       id_peca: this.formEditProduto.get('id_peca')?.value
@@ -65,6 +71,7 @@ export class EditarProdutoEstoqueComponent implements OnInit{
     
     this.estoqueService.editProduto(data).subscribe((res)=> {
       console.log(res);
+    this.isLoadingSalvar = false;
       
       alert(res.msg)
     })
