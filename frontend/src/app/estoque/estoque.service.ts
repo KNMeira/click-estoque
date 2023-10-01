@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class EstoqueService {
-    //private url = "https://ec2-18-191-107-73.us-east-2.compute.amazonaws.com.sslip.io"
-    private url = "http://localhost:3000"
+    private url = "https://ec2-18-191-107-73.us-east-2.compute.amazonaws.com.sslip.io"
+    //private url = "http://localhost:3000"
 
     constructor(private httpClient: HttpClient) { }
 
