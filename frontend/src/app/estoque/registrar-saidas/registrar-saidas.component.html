@@ -6,7 +6,7 @@
                     <th>Cód.</th>
                     <th>Produto</th>
                     <th>Fornecedor</th>
-                    <th>Qnt. Entrada</th>
+                    <th>Qnt. Saída</th>
                 </tr>
             </thead>
 
@@ -15,17 +15,16 @@
                     <td>{{peca.id_peca}}</td>
                     <td>{{peca.peca}}</td>
                     <td>{{peca.fornecedor}}</td>
-                    <td [formGroup]="formRegistrarEntradas">
+                    <td [formGroup]="formRegistrarSaidas">
                         <input class="text-center form-control" type="number" step="1" oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');" formControlName="{{peca.id_peca}}">
                     </td>
                 </tr>
             </tbody>
         </table>
         <div class="text-center ">
-            <button class="btn btn-primary" (click)="registrarEntradas()">
-                <span *ngIf="!isLoadingRegistro">Registrar Entrada</span>
+            <button class="btn btn-primary" (click)="registrarSaidas()">
+                <span *ngIf="!isLoadingRegistro">Registrar Saídas</span>
                 <img *ngIf="isLoadingRegistro" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
-
             </button>
         </div>
     </div>

@@ -30,6 +30,7 @@ import { CpfMaskDirective } from './directives/cpf-mask.directive';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { CnpjMaskDirective } from './directives/cnpj-mask.directive';
 import { RegistrarEntradasComponent } from './estoque/registrar-entradas/registrar-entradas.component';
+import { RegistrarSaidasComponent } from './estoque/registrar-saidas/registrar-saidas.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { RegistrarEntradasComponent } from './estoque/registrar-entradas/registr
     CpfMaskDirective,
     CnpjMaskDirective,
     PhoneMaskDirective,
-    RegistrarEntradasComponent
+    RegistrarEntradasComponent,
+    RegistrarSaidasComponent
   ],
   imports: [
     BrowserModule,

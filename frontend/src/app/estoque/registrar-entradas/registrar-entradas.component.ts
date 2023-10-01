@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EstoqueService } from '../estoque.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-registrar-entradas',
@@ -11,10 +11,12 @@ export class RegistrarEntradasComponent implements OnInit {
 
   public pecas: any = [];
   public arrayFormEntradas: any = [];
+  public isPecasLoaded: boolean = false;
+  public isLoadingRegistro: boolean = false;
 
   public formRegistrarEntradas: FormGroup = new FormGroup({});
 
-  constructor(private estoqueService: EstoqueService, private fb: FormBuilder) { }
+  constructor(private estoqueService: EstoqueService) { }
 
   ngOnInit(): void {
     
@@ -25,13 +27,17 @@ export class RegistrarEntradasComponent implements OnInit {
       console.log(this.formRegistrarEntradas);
   
       this.pecas = prods
+      this.isPecasLoaded = true;
     })
   }
 
   public registrarEntradas(){
+    this.isLoadingRegistro = true;
     const data = this.formRegistrarEntradas.value;
     this.estoqueService.registrarEntradas(data).subscribe((res) => {
       console.log(res);
+    this.isLoadingRegistro = false;
+
       alert(res.msg)
       
     })

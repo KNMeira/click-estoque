@@ -127,6 +127,13 @@ app.post('/registrar-entradas', (req, res) => {
     })
 })
 
+app.post('/registrar-saidas', (req, res) => {
+    registrarSaidas(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 //login
 async function verificaLogin(dadosLogin) {
     const values = [dadosLogin.usuario, dadosLogin.senha];
@@ -189,13 +196,11 @@ async function getEstoque() {
 
 async function editProduto(produto) {
     const values = [produto.peca, produto.tamanho, produto.valor_compra, produto.valor_venda, produto.quantidade, produto.id_fornecedor, produto.id_peca]
-    console.log(values);
 
     const client = new Client(connection)
     await client.connect()
     res = await client.query('UPDATE produtos SET peca = $1, tamanho = $2, valor_compra = $3, valor_venda = $4, quantidade = $5, id_fornecedor = $6 WHERE id_peca = $7', values)
     await client.end()
-    console.log(res);
 
     let response
     if (res.rowCount > 0) {
@@ -215,8 +220,18 @@ async function registrarEntradas(entradas) {
         return { status: 400, msg: 'Não há entradas para cadastrar.' }
     } else {
         let res = await atualizaQntProduto(entradas, '+');
-        console.log('response registrar entrada ', res);
-        return res 
+        return res
+    }
+}
+
+async function registrarSaidas(saidas) {
+    const hasSaida = await registraLog(saidas, 'S');
+    if (!hasSaida) {
+        return { status: 400, msg: 'Não há saídas para cadastrar.' }
+    } else {
+        res = await atualizaQntProduto(saidas, '-');
+        return res;
+
     }
 }
 
@@ -361,7 +376,7 @@ async function editFornecedor(fornecedor) {
 
 async function registraLog(obj, evento) {
     let arrayIds = [];
-    let arrayQnt = [];
+    let arrayQnt = []
     Object.keys(obj).forEach((id) => {
         arrayIds.push(id)
     })
@@ -418,10 +433,18 @@ async function atualizaQntProduto(obj, operacao) {
     })
     console.log(arrayIds, arrayQnt);
 
-    arrayQnt.forEach(async (qnt, i) => {
+    let totalPecasAtt = 0;
+    const promises = arrayQnt.map(async (qnt, i) => {
         if (qnt > 0) {
             let peca = await getPeca(arrayIds[i]);
-            let qntAtt = (peca[0].quantidade + qnt);
+            let qntAtt;
+            if (operacao == '+') {
+                qntAtt = (peca[0].quantidade + qnt);
+            }
+
+            if (operacao == '-') {
+                qntAtt = (peca[0].quantidade - qnt);
+            }
 
             const values = [qntAtt, arrayIds[i]];
             console.log(values);
@@ -432,19 +455,19 @@ async function atualizaQntProduto(obj, operacao) {
 
             res = await client.query(queryUpdate, values)
             await client.end()
-            
-            let response;
 
             if (res.rowCount > 0) {
-                response = { status: 201, msg: 'Entradas atualizadas com sucesso' }
-                return response
-            } else {
-                response = { status: 500, msg: 'Erro inesperado, tente novamente' }
-                return response
-
-            }
+                totalPecasAtt = totalPecasAtt + res.rowCount;
+            } 
         }
     })
 
+    await Promise.all(promises);
 
+
+    if (totalPecasAtt > 0) {
+        return { status: 201, msg: 'Estoque atualizado com sucesso' }
+    } else {
+        return{ status: 500, msg: 'Erro inesperado, tente novamente' }
+    }
 }
