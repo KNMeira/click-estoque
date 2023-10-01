@@ -2,30 +2,30 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#cadastrar-tab-pane"
-                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true">Cadastrar Clientes</button>
+                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true" (click)="changeSelectedTab(0)">Cadastrar Clientes</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="listar-tab" data-bs-toggle="tab" data-bs-target="#listar-tab-pane"
-                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false">Listar Clientes</button>
+                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false" (click)="changeSelectedTab(1)">Listar Clientes</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="editar-tab" data-bs-toggle="tab" data-bs-target="#editar-tab-pane"
-                type="button" role="tab" aria-controls="editar-tab-pane" aria-selected="false">Editar Clientes</button>
+                type="button" role="tab" aria-controls="editar-tab-pane" aria-selected="false" (click)="changeSelectedTab(2)">Editar Clientes</button>
         </li>
     </ul>
 
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="cadastrar-tab-pane" role="tabpanel" aria-labelledby="cadastrar-tab"
         tabindex="0">
-            <app-cadastrar-cliente></app-cadastrar-cliente>
+            <app-cadastrar-cliente *ngIf="selectedTab == 0"></app-cadastrar-cliente>
         </div>
         
         <div class="tab-pane fade" id="listar-tab-pane" role="tabpanel" aria-labelledby="lista-tab" tabindex="0">
-            <app-lista-cliente></app-lista-cliente>
+            <app-lista-cliente *ngIf="selectedTab == 1"></app-lista-cliente>
         </div>
 
         <div class="tab-pane fade" id="editar-tab-pane" role="tabpanel" aria-labelledby="editar-tab" tabindex="0">
-            <app-editar-cliente></app-editar-cliente>
+            <app-editar-cliente *ngIf="selectedTab == 2"></app-editar-cliente>
         </div>
     </div>
 

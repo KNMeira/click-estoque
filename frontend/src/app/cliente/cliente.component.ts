@@ -7,10 +7,16 @@ import { Component } from '@angular/core';
 })
 export class ClienteComponent {
 
+  public selectedTab: number = 0
+
   public setDarkMode(){
     let isDarkMode = localStorage.getItem('isDarkMode');
 
     return isDarkMode == 'true' ? 'dark' : '';
   };
+
+  public changeSelectedTab(tab:number){
+    this.selectedTab = tab
+  }
 
 }

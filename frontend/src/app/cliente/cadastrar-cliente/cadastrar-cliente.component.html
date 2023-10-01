@@ -3,38 +3,42 @@
 
         <h4 class="my-5">CADASTRO DE CLIENTES</h4>
 
-        <form id="cadastroFormCliente" class="row">
+        <form id="cadastroFormCliente" class="row" [formGroup]="formCadastroCliente">
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" name="cliente" id="cliente"
+                    <input class="form-control" class="form-control" type="text" formControlName="cliente" id="cliente"
                         placeholder=" ">
                     <label for="cliente">CLIENTE</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="cpf" name="cpf">
+                    <input class="form-control" placeholder=" " type="text" id="cpf" formControlName="cpf">
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="enderecoCliente" name="enderecoCliente">
+                    <input class="form-control" placeholder=" " type="text" id="enderecoCliente" formControlName="enderecoCliente">
                     <label for="endereco">ENDEREÇO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" id="emailCliente" name="emailCliente">
+                    <input class="form-control" placeholder=" " type="email" id="emailCliente" formControlName="emailCliente">
                     <label for="email">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" name="celularCliente" id="idCelularCliente">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celularCliente" id="idCelularCliente">
                     <label for="celular">CELULAR</label>
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario">CADASTRAR</button>
-                    <button class="btn btn-secondary ms-4" id="btnCancelarUsuario">&nbsp;CANCELAR&nbsp;</button>
+                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" (click)="cadastrarCliente()">
+                        <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
+                        <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
+                    </button>
+                    <button class="btn btn-secondary ms-4" id="btnCancelarUsuario" (click)="formCadastroCliente.reset()
+                    ">&nbsp;CANCELAR&nbsp;</button>
                 </div>
             </div>
 

@@ -134,6 +134,51 @@ app.post('/registrar-saidas', (req, res) => {
     })
 })
 
+app.post('/cadastro-cliente', (req, res) => {
+    cadastrarCliente(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.get('/clientes', (req, res) => {
+    getClientes().then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+//cliente
+async function cadastrarCliente(cliente) {
+    const values = [cliente.cliente, cliente.cpf, cliente.enderecoCliente, cliente.emailCliente, cliente.celularCliente]
+    const client = new Client(connection)
+    await client.connect()
+
+    let verificaCpf =  await client.query('SELECT * FROM clientes WHERE cpf =$1',[cliente.cpf])
+    if (verificaCpf.rowCount > 0) {
+        return {status: 400, msg:"Cpf já cadastrado"}
+    } else {
+        let res = await client.query('INSERT INTO clientes(cliente, cpf, endereco, email, celular) values($1,$2,$3,$4,$5)', values)
+
+        await client.end()
+        
+        if (res.rowCount > 0) {
+            return {status: 201, msg:"Cliente cadastrado com sucesso"}
+        } else {
+            return {status: 500, msg:"Erro inesperado, tente novamente"}
+        }
+    }
+}
+
+async function getClientes(){
+    const client = new Client(connection)
+    await client.connect()
+
+    let res = await client.query('SELECT * FROM clientes')
+    return res.rows
+}
+
+
 //login
 async function verificaLogin(dadosLogin) {
     const values = [dadosLogin.usuario, dadosLogin.senha];
