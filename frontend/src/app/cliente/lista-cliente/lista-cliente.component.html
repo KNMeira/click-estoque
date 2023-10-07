@@ -12,20 +12,26 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>NOME CLIENTE</th>
                         <th>CPF</th>
                         <th>ENDEREÇO</th>
                         <th>E-MAIL</th>
                         <th>CELULAR</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let cliente of clientes">
+                        <td>{{ cliente.id }}</td>
                         <td>{{ cliente.cliente }}</td>
                         <td>{{ cliente.cpf }}</td>
                         <td>{{ cliente.endereco }}</td>
                         <td>{{ cliente.email }}</td>
                         <td>{{ cliente.celular }}</td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Editar"> <i class='bx bxs-edit-alt action-icon' (click)="editarCliente(cliente)"></i> </td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Excluir"> <i class='bx bxs-trash action-icon' (click)="confirmDelete(cliente)"></i> </td>
                     </tr>
                 </tbody>
             </table>

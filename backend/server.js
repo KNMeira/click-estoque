@@ -148,31 +148,95 @@ app.get('/clientes', (req, res) => {
     })
 })
 
+app.post('/delete-cliente', (req, res) => {
+    deleteCliente(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/cliente', (req, res) => {
+    getCliente(req.body.id).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/editar-cliente', (req, res) => {
+    editCliente(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
 //cliente
+
+async function editCliente(cliente) {
+    const values = [cliente.cliente, cliente.cpf, cliente.email, cliente.endereco, cliente.celular, cliente.id]
+    const client = new Client(connection)
+    await client.connect()
+
+    let res = await client.query('UPDATE clientes SET cliente = $1, cpf = $2, email = $3, endereco = $4, celular = $5 WHERE id = $6', values)
+    await client.end()  
+
+    let response
+    if (res.rowCount > 0) {
+        response = { status: 201, msg: 'Edição salva com sucesso' }
+    } else {
+        response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
+    }
+
+    return response
+}
+
+async function getCliente(id) {
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT * FROM clientes  WHERE id = $1', [id])
+    await client.end()
+    return res.rows
+}
+
+async function deleteCliente(cliente) {
+    const client = new Client(connection)
+    await client.connect()
+
+    let del = await client.query('DELETE FROM clientes WHERE id = $1', [cliente.id]);
+
+    let response;
+    if (del.rowCount > 0) {
+        response = { status: 200, msg: "Cliente excluído com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+
+    }
+
+    await client.end()
+    return response;
+}
 async function cadastrarCliente(cliente) {
     const values = [cliente.cliente, cliente.cpf, cliente.enderecoCliente, cliente.emailCliente, cliente.celularCliente]
     const client = new Client(connection)
     await client.connect()
 
-    let verificaCpf =  await client.query('SELECT * FROM clientes WHERE cpf =$1',[cliente.cpf])
+    let verificaCpf = await client.query('SELECT * FROM clientes WHERE cpf =$1', [cliente.cpf])
 
     if (verificaCpf.rowCount > 0) {
         await client.end()
-        return {status: 400, msg:"Cpf já cadastrado"}
+        return { status: 400, msg: "Cpf já cadastrado" }
     } else {
         let res = await client.query('INSERT INTO clientes(cliente, cpf, endereco, email, celular) values($1,$2,$3,$4,$5)', values)
 
         await client.end()
-        
+
         if (res.rowCount > 0) {
-            return {status: 201, msg:"Cliente cadastrado com sucesso"}
+            return { status: 201, msg: "Cliente cadastrado com sucesso" }
         } else {
-            return {status: 500, msg:"Erro inesperado, tente novamente"}
+            return { status: 500, msg: "Erro inesperado, tente novamente" }
         }
     }
 }
 
-async function getClientes(){
+async function getClientes() {
     const client = new Client(connection)
     await client.connect()
 
@@ -222,7 +286,7 @@ async function saveProduto(produto) {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-    
+
     await client.end()
     return response;
 }
@@ -300,14 +364,14 @@ async function saveUsuario(usuario) {
         response = { status: 400, msg: 'Dados já cadastrados' }
     } else {
         const res = await client.query(`INSERT INTO usuarios(usuario, senha, cpf, email, celular) VALUES ($1, $2, $3, $4, $5)`, values)
-        
+
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Usuário cadastrado com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-    
+
     await client.end()
     return response
 }
@@ -325,14 +389,14 @@ async function editUsuario(usuario) {
         response = { status: 400, msg: 'Não é possível salvar a edição, já existe registro usando esse(s) dado(s)' }
     } else {
         const res = await client.query(`UPDATE usuarios SET usuario = $1  senha = $2 email = $3 celular = $4 WHERE cpf = $5)`, values)
-        
+
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Edição salva com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
         }
     }
-    
+
     await client.end()
     return response
 
@@ -371,14 +435,14 @@ async function saveFornecedor(fornecedor) {
         response = { status: 400, msg: 'CNPJ já cadastrado' }
     } else {
         const res = await client.query(`INSERT INTO fornecedores(fornecedor, cnpj, endereco, email, celular) VALUES ($1, $2, $3, $4, $5)`, values)
-        
+
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Fornecedor cadastrado com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-    
+
     await client.end()
     return response
 }
@@ -481,7 +545,6 @@ async function atualizaQntProduto(obj, operacao) {
     Object.values(obj).forEach((qnt) => {
         arrayQnt.push(qnt)
     })
-    console.log(arrayIds, arrayQnt);
 
     let totalPecasAtt = 0;
     const promises = arrayQnt.map(async (qnt, i) => {
@@ -497,7 +560,6 @@ async function atualizaQntProduto(obj, operacao) {
             }
 
             const values = [qntAtt, arrayIds[i]];
-            console.log(values);
             queryUpdate = `UPDATE produtos SET quantidade = $1 WHERE id_peca = $2`;
 
             const client = new Client(connection)
@@ -508,7 +570,7 @@ async function atualizaQntProduto(obj, operacao) {
 
             if (res.rowCount > 0) {
                 totalPecasAtt = totalPecasAtt + res.rowCount;
-            } 
+            }
         }
     })
 
@@ -518,6 +580,6 @@ async function atualizaQntProduto(obj, operacao) {
     if (totalPecasAtt > 0) {
         return { status: 201, msg: 'Estoque atualizado com sucesso' }
     } else {
-        return{ status: 500, msg: 'Erro inesperado, tente novamente' }
+        return { status: 500, msg: 'Erro inesperado, tente novamente' }
     }
 }

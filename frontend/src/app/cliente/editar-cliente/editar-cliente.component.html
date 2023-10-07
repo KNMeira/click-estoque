@@ -1,10 +1,69 @@
 <div>
     <div class="container row">
         <div class="col-md-8"></div>
-        <form class="d-flex col-md-4 text-end mt-5">
-            <input class="form-control me-2" type="pesquisarEstoque" placeholder="Pesquisar"
-                aria-label="pesquisarEstoque">
-            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        <form class="d-flex col-md-4 text-end mt-5" [formGroup]="pesquisarClienteEditar">
+            <input class="form-control me-2" type="text" placeholder="Pesquisar ID do Cliente"
+                aria-label="pesquisarCliente" formControlName="filtro">
+            <button class="btn btn-outline-primary" type="button" (click)="pesquisarCliente()">Buscar</button>
         </form>
+    </div>
+
+    <div class="text-center" *ngIf="isClienteLoaded">
+
+        <form id="editFormCliente" class="row" [formGroup]="editFormCliente">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="form-floating mb-3  mt-3">
+                    <input class="form-control" class="form-control" type="text" formControlName="id" id="idEdit"
+                        placeholder=" ">
+                    <label for="idEdit">ID</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" class="form-control" type="text" formControlName="cliente" id="clienteEdit"
+                        placeholder=" ">
+                    <label for="clienteEdit">CLIENTE</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" id="cpfEdit" formControlName="cpf">
+                    <label for="cpfEdit">CPF</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="text" id="enderecoClienteEdit" formControlName="endereco">
+                    <label for="enderecoClienteEdit">ENDEREÇO</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="email" id="emailClienteEdit" formControlName="email">
+                    <label for="emailClienteEdit">E-MAIL</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" id="celularClienteEdit">
+                    <label for="celularClienteEdit">CELULAR</label>
+                </div>
+
+                <div>
+                    <button class="btn btn-primary me-4" type="button" (click)="editarCliente()">
+                        <span *ngIf="!isLoadingEdit">SALVAR</span>
+                        <img *ngIf="isLoadingEdit" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
+                    </button>
+                    <button class="btn btn-secondary ms-4" type="button" (click)="cancelarEdit()">&nbsp;CANCELAR&nbsp;</button>
+                </div>
+            </div>
+
+            <div class="col-4"></div>
+
+        </form>
+    </div>
+
+    <div class="text-center mt-5" *ngIf="!isClienteLoaded && !loading">
+        {{ msgBusca }}
+    </div>
+
+    <div class="text-center mt-5" *ngIf="!isClienteLoaded && loading">
+        <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+        <p>Buscando</p>
     </div>
 </div>

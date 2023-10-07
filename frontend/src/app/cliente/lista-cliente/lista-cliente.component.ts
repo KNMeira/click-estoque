@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ClienteService } from '../cliente.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -14,6 +14,8 @@ export class ListaClienteComponent implements OnInit {
   public formPesquisarCliente: FormGroup = new FormGroup({
     filtro: new FormControl('', Validators.required)
   })
+
+  @Output() editarClick = new EventEmitter<any>();
 
   constructor(private clienteService: ClienteService) { }
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class ListaClienteComponent implements OnInit {
   public getAllClientes() {
     this.clienteService.getAllClientes().subscribe(res => {
       this.clientes = res
-      this.clienteLoaded = true
+      this.clienteLoaded = true      
     })
   }
 
@@ -47,4 +49,23 @@ export class ListaClienteComponent implements OnInit {
     }
   }
 
+  public confirmDelete(cliente: any) {
+    if(confirm(`Tem certeza que deseja deletar o(a) cliente ${cliente.cliente}?` )) {
+      this.deleteCliente(cliente.id)
+    } 
+  }
+
+
+  public deleteCliente(idCliente: any) {
+    this.clienteService.deleteCliente(idCliente).subscribe((res) => {
+      alert(res.msg)
+      this.clienteLoaded = false
+      this.getAllClientes();
+      
+    })    
+  }
+
+  public editarCliente(cliente:any ) {
+    this.editarClick.emit(cliente)
+  }
 }
