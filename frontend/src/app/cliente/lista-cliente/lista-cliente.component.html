@@ -1,9 +1,9 @@
 <div>
     <div class="container row">
         <div class="col-md-8"></div>
-        <form class="d-flex col-md-4 text-end mt-5">
-            <input class="form-control me-2" type="text" placeholder="Pesquisar" aria-label="pesquisarCliente">
-            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarCliente">
+            <input class="form-control me-2" type="text" placeholder="Pesquisar" aria-label="pesquisarCliente" formControlName="filtro">
+            <button class="btn btn-outline-primary" type="button" (click)="pesquisarCliente()">Buscar</button>
         </form>
     </div>
 
