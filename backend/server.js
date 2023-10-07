@@ -155,7 +155,9 @@ async function cadastrarCliente(cliente) {
     await client.connect()
 
     let verificaCpf =  await client.query('SELECT * FROM clientes WHERE cpf =$1',[cliente.cpf])
+
     if (verificaCpf.rowCount > 0) {
+        await client.end()
         return {status: 400, msg:"Cpf já cadastrado"}
     } else {
         let res = await client.query('INSERT INTO clientes(cliente, cpf, endereco, email, celular) values($1,$2,$3,$4,$5)', values)
@@ -175,6 +177,8 @@ async function getClientes(){
     await client.connect()
 
     let res = await client.query('SELECT * FROM clientes')
+    await client.end()
+
     return res.rows
 }
 
@@ -205,20 +209,21 @@ async function saveProduto(produto) {
 
     const verificaNomePeca = await client.query(`SELECT peca FROM produtos WHERE peca = $1`, [produto.peca]);
 
+
     let response
     if (verificaNomePeca.rowCount > 0) {
         response = { status: 400, msg: 'Nome da peça já cadastrado, insira um nome diferente' }
 
     } else {
         const res = await client.query(`INSERT INTO produtos(peca, tamanho, quantidade, id_fornecedor, valor_compra, valor_venda) VALUES ($1, $2, $3, $4, $5, $6)`, values)
-        await client.end()
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Produto cadastrado com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-
+    
+    await client.end()
     return response;
 }
 
@@ -295,15 +300,15 @@ async function saveUsuario(usuario) {
         response = { status: 400, msg: 'Dados já cadastrados' }
     } else {
         const res = await client.query(`INSERT INTO usuarios(usuario, senha, cpf, email, celular) VALUES ($1, $2, $3, $4, $5)`, values)
-        await client.end()
-
+        
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Usuário cadastrado com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-
+    
+    await client.end()
     return response
 }
 
@@ -320,15 +325,15 @@ async function editUsuario(usuario) {
         response = { status: 400, msg: 'Não é possível salvar a edição, já existe registro usando esse(s) dado(s)' }
     } else {
         const res = await client.query(`UPDATE usuarios SET usuario = $1  senha = $2 email = $3 celular = $4 WHERE cpf = $5)`, values)
-        await client.end()
-
+        
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Edição salva com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
         }
     }
-
+    
+    await client.end()
     return response
 
 }
@@ -366,15 +371,15 @@ async function saveFornecedor(fornecedor) {
         response = { status: 400, msg: 'CNPJ já cadastrado' }
     } else {
         const res = await client.query(`INSERT INTO fornecedores(fornecedor, cnpj, endereco, email, celular) VALUES ($1, $2, $3, $4, $5)`, values)
-        await client.end()
-
+        
         if (res.rowCount > 0) {
             response = { status: 201, msg: 'Fornecedor cadastrado com sucesso' }
         } else {
             response = { status: 500, msg: 'Não foi possível cadastrar, tente novamente' }
         }
     }
-
+    
+    await client.end()
     return response
 }
 
