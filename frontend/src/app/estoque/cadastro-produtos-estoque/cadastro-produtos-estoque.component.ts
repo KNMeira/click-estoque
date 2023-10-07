@@ -30,7 +30,6 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
 
   public cadastrarProduto() {
     this.isLoadingCadastrar = true;
-    console.log(this.formProduto.value);
 
     this.estoqueService.saveProduto(this.formProduto.value).subscribe((res) => {
       this.isLoadingCadastrar = false;
@@ -40,12 +39,10 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
 
   public getFornecedores() {
     this.estoqueService.getFornecedores().subscribe((res) => {
-      console.log(res);
       res.forEach((fornecedor: any) => {
         let options = { id: fornecedor.id, value: fornecedor.fornecedor }
         this.fornecedoresOptions.push(options)
       });
-      console.log(this.fornecedoresOptions);
 
     })
   }

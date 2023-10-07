@@ -23,7 +23,6 @@ export class RegistrarSaidasComponent {
       prods.forEach((peca:any) => {
         this.formRegistrarSaidas.addControl(peca.id_peca, new FormControl(0))
       });
-      console.log(this.formRegistrarSaidas);
   
       this.pecas = prods
       this.isPecasLoaded = true;
@@ -34,7 +33,6 @@ export class RegistrarSaidasComponent {
     this.isLoadingRegistro = true;
     const data = this.formRegistrarSaidas.value;
     this.estoqueService.registrarSaidas(data).subscribe((res) => {
-      console.log(res);
       this.isLoadingRegistro = false;
       alert(res.msg)
       

@@ -36,7 +36,6 @@ export class ListarUsuariosComponent implements OnInit {
   public filterUsuario(){
     let termoPesquisa = this.formPesquisarUsuario.get('filtro')?.value;
     this.usuariosService.getAllUsuarios().subscribe((allUsers: any) => {
-      console.log(allUsers);
       
       if (termoPesquisa != '' && termoPesquisa != undefined) {
         this.usuarios = allUsers.filter((user: any) => {

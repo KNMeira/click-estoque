@@ -24,7 +24,6 @@ export class RegistrarEntradasComponent implements OnInit {
       prods.forEach((peca:any) => {
         this.formRegistrarEntradas.addControl(peca.id_peca, new FormControl(0))
       });
-      console.log(this.formRegistrarEntradas);
   
       this.pecas = prods
       this.isPecasLoaded = true;
@@ -35,7 +34,6 @@ export class RegistrarEntradasComponent implements OnInit {
     this.isLoadingRegistro = true;
     const data = this.formRegistrarEntradas.value;
     this.estoqueService.registrarEntradas(data).subscribe((res) => {
-      console.log(res);
     this.isLoadingRegistro = false;
 
       alert(res.msg)

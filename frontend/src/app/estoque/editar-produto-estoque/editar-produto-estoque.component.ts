@@ -47,9 +47,7 @@ export class EditarProdutoEstoqueComponent implements OnInit{
     const data = {
       cod: this.formPesquisarPeca.get('filtro')?.value
     }
-    this.estoqueService.getPeca(data).subscribe((prod) => {
-      console.log(prod);
-      
+    this.estoqueService.getPeca(data).subscribe((prod) => {      
       if (prod[0]) {
         this.produto = prod[0]
         this.formEditProduto.patchValue(this.produto);
@@ -81,12 +79,10 @@ export class EditarProdutoEstoqueComponent implements OnInit{
 
   public getFornecedores() {
     this.estoqueService.getFornecedores().subscribe((res) => {
-      console.log(res);
       res.forEach((fornecedor: any) => {
         let options = { id: fornecedor.id, value: fornecedor.fornecedor }
         this.fornecedoresOptions.push(options)
       });
-      console.log(this.fornecedoresOptions);
 
     })
   }

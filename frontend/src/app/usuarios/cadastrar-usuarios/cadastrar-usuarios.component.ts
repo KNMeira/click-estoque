@@ -26,7 +26,6 @@ export class CadastrarUsuariosComponent {
 
     if (this.formUsuario.valid) {
       this.usuariosService.cadastrar(this.formUsuario.value).subscribe((res) => {
-        console.log(res);
         this.isLoadingCadastrar = false;
 
         alert(res.msg)
