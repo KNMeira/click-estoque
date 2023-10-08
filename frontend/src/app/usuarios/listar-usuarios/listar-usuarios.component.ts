@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UsuariosService } from '../usuarios.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ListarUsuariosComponent implements OnInit {
 
+  @Output() editarClick = new EventEmitter<any>();
   public usuarios: any = [];
   public usuariosLoaded: boolean = false;
 
@@ -50,5 +51,24 @@ export class ListarUsuariosComponent implements OnInit {
       this.usuarios = cadastros;
       this.usuariosLoaded = true;
     });
+  }
+
+  public confirmDelete(usuario: any) {
+    if(confirm(`Tem certeza que deseja deletar o usuário ${usuario.usuario}?` )) {
+      this.deleteFornecedor(usuario.id)
+    } 
+  }
+
+  public deleteFornecedor(id: any) {
+    this.usuariosService.deleteUsuario(id).subscribe((res) => {
+      alert(res.msg)
+      this.usuariosLoaded = false
+      this.getUsuarios();
+      
+    })  
+  }
+
+  public editarUsuario(usuario: any) {
+    this.editarClick.emit(usuario);
   }
 }

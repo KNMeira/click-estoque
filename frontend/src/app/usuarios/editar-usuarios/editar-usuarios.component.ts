@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from '../usuarios.service';
 
@@ -7,7 +7,10 @@ import { UsuariosService } from '../usuarios.service';
   templateUrl: './editar-usuarios.component.html',
   styleUrls: ['./editar-usuarios.component.scss']
 })
-export class EditarUsuariosComponent {
+export class EditarUsuariosComponent implements OnInit, OnDestroy {
+
+  @Input() usuarioEdit: any;
+  @Output() usuarioEditChange = new EventEmitter<any>();
 
   public user = {}
   public isUserLoaded: boolean = false;
@@ -29,6 +32,19 @@ export class EditarUsuariosComponent {
   })
 
   constructor(private usuarioService: UsuariosService) { }
+
+
+  ngOnInit(): void {
+    if (this.usuarioEdit != undefined) {
+      this.formEditUsuario.patchValue(this.usuarioEdit)
+      this.isUserLoaded= true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.usuarioEdit = undefined;
+    this.usuarioEditChange.emit(this.usuarioEdit);
+  }
 
   public buscarUsuario() {
     if (this.formBuscar.get('filtro')?.value == '' || this.formBuscar.get('tipoBusca')?.value == '') {
@@ -58,8 +74,8 @@ export class EditarUsuariosComponent {
     this.formBuscar.reset();
     this.isUserLoaded = false;
     this.msgBusca = 'Ultilize o filtro para buscar o usuário que deseja editar'
-
-
+    this.usuarioEdit = undefined;
+    this.usuarioEditChange.emit(this.usuarioEdit)
   }
 
   public salvarEdicao() {

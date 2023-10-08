@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class UsuariosComponent {
   public selectedTab = 0;
+  public usuarioEdit: any;
 
   public setDarkMode(){
     let isDarkMode = localStorage.getItem('isDarkMode');
@@ -14,8 +15,13 @@ export class UsuariosComponent {
     return isDarkMode == 'true' ? 'dark' : '';
   };
 
-  changeSelectedTab(tab: number){
+  public changeSelectedTab(tab: number){
     this.selectedTab = tab;
+  }
+
+  public openEditarTab(event: any) {
+    this.changeSelectedTab(2);
+    this.usuarioEdit = event;
   }
 
 }

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsuariosService {
     private url = "https://ec2-18-191-107-73.us-east-2.compute.amazonaws.com.sslip.io"
+    //private url = "http://localhost:3000"
 
     constructor(private httpClient: HttpClient) { }
 
@@ -24,5 +25,9 @@ export class UsuariosService {
 
     public editarUsuario(dadosUsuario: any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/editar-usuario`, dadosUsuario);
+    }
+
+    public deleteUsuario(id: any):  Observable<any> {
+        return this.httpClient.post(`${this.url}/delete-usuario`, {id: id});
     }
 }

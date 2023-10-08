@@ -71,6 +71,13 @@ app.post('/editar-usuario', (req, res) => {
     })
 })
 
+app.post('/delete-usuario', (req, res) => {
+    deleteUsuario(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.post('/cadastro-fornecedor', (req, res) => {
     saveFornecedor(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
@@ -385,6 +392,23 @@ async function registrarSaidas(saidas) {
 }
 
 //usuarios
+async function deleteUsuario(id) {
+    const client = new Client(connection)
+    await client.connect()
+
+    let del = await client.query('DELETE FROM usuarios WHERE id = $1', [id.id]);
+
+    let response;
+    if (del.rowCount > 0) {
+        response = { status: 200, msg: "Usuário excluído com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+
+    }
+
+    await client.end()
+    return response;
+}
 
 async function saveUsuario(usuario) {
     const values = [usuario.usuario, usuario.senha, usuario.cpf, usuario.email, usuario.celular];
@@ -534,7 +558,7 @@ async function editFornecedor(fornecedor) {
     } else {
         response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
     }
-    
+
     return response
 }
 
