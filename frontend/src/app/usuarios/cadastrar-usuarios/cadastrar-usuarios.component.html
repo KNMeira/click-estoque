@@ -8,24 +8,24 @@
             <div class="col-4">
                 <div class="form-floating mb-3">
                     <input class="form-control" class="form-control" type="text" formControlName="usuario" id="usuario"
-                        placeholder=" "  [ngClass]="{'is-valid': this.formUsuario.get('usuario')?.value.length > 0, 'is-invalid': this.formUsuario.get('usuario')?.value.length == 0 && this.formUsuario.controls['usuario'].touched }">
+                        placeholder=" "  [ngClass]="{'is-valid': this.formUsuario.get('usuario')?.valid, 'is-invalid': this.formUsuario.get('usuario')?.invalid && this.formUsuario.controls['usuario'].touched }">
                     <label for="usuario">USUÁRIO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" [ngClass]="cpfValidation()" type="text" id="cpf" formControlName="cpf" placeholder=" " appCpfMask >
+                    <input class="form-control" [ngClass]="{'is-valid': this.formUsuario.get('cpf')?.valid, 'is-invalid':this.formUsuario.get('cpf')?.invalid && this.formUsuario.controls['cpf'].touched }" type="text" id="cpf" formControlName="cpf" placeholder=" " appCpfMask >
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="email" id="email"
-                    formControlName="email" [ngClass]="{'is-valid': this.formUsuario.controls['email'].valid, 'is-invalid':this.formUsuario.controls['email'].invalid && this.formUsuario.controls['email'].touched }">
+                    formControlName="email" [ngClass]="{'is-valid': this.formUsuario.get('email')?.valid, 'is-invalid':this.formUsuario.get('email')?.invalid && this.formUsuario.controls['email'].touched }">
                     <label for="email">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular"
-                        id="celular" appPhoneMask [ngClass]="phoneValidation()">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" (keyup)="log()"
+                        id="celular" appPhoneMask [ngClass]="{'is-valid': this.formUsuario.get('celular')?.valid, 'is-invalid':this.formUsuario.get('celular')?.invalid && this.formUsuario.controls['celular'].touched }">
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -35,7 +35,7 @@
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" (click)="cadastrar()">
+                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" [disabled]="formUsuario.invalid" (click)="cadastrar()">
                         <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
                         <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
 

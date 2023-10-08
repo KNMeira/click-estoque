@@ -11,11 +11,15 @@ export class CadastrarUsuariosComponent {
 
   public formUsuario: FormGroup = new FormGroup({
     usuario: new FormControl('', Validators.required),
-    cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
+    cpf: new FormControl('', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    celular: new FormControl('', [Validators.required, Validators.minLength(11)]),
+    celular: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]),
     senha: new FormControl('', [Validators.required,]),
   })
+
+  log(){
+    console.log(this.formUsuario.get('celular'))
+  }
 
   public isLoadingCadastrar: boolean = false;
 
@@ -26,13 +30,15 @@ export class CadastrarUsuariosComponent {
 
     if (this.formUsuario.valid) {
       this.usuariosService.cadastrar(this.formUsuario.value).subscribe((res) => {
-        this.isLoadingCadastrar = false;
-
+        
         alert(res.msg)
         this.formUsuario.reset();
+        this.isLoadingCadastrar = false;
       })
     } else {
       alert('Verifique se todos os campos estão preenchidos')
+      this.isLoadingCadastrar = false;
+
     }
 
   }
@@ -41,15 +47,4 @@ export class CadastrarUsuariosComponent {
     this.formUsuario.reset();
   }
 
-  public cpfValidation() {
-    if (this.formUsuario.get('cpf')?.value.length >= 1 && this.formUsuario.get('cpf')?.value.length < 14) return 'is-invalid'
-    if (this.formUsuario.get('cpf')?.value.length >= 14) return 'is-valid'
-    return
-  }
-
-  public phoneValidation() {
-    if (this.formUsuario.get('celular')?.value.length >= 1 && this.formUsuario.get('celular')?.value.length < 14) return 'is-invalid'
-    if (this.formUsuario.get('celular')?.value.length >= 14) return 'is-valid'
-    return
-  }
 }
