@@ -19,10 +19,10 @@ export class EditarFornecedoresComponent implements OnInit, OnDestroy {
   public formEditFornecedor: FormGroup = new FormGroup({
     id: new FormControl({ value: '', disabled: true }, [Validators.required]),
     fornecedor: new FormControl('', [Validators.required]),
-    cnpj: new FormControl({ value: '', disabled: true }, [Validators.required]),
+    cnpj: new FormControl('', [Validators.required, Validators.minLength(18), Validators.maxLength(18)]),
     endereco: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
-    celular: new FormControl('', [Validators.required])
+    celular: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)])
   })
 
   public fornecedor = [];
@@ -74,7 +74,6 @@ export class EditarFornecedoresComponent implements OnInit, OnDestroy {
     const data = {
       ...this.formEditFornecedor.value,
       id: this.formEditFornecedor.get('id')?.value,
-      cnpj: this.formEditFornecedor.get('cnpj')?.value
     }
     this.fornecedoresService.editFornecedor(data).subscribe((data) => {
       alert(data.msg)

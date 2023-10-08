@@ -21,32 +21,32 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" formControlName="usuario"
+                    <input class="form-control" class="form-control"  [ngClass]="{'is-valid': this.formEditUsuario.get('usuario')?.valid && this.formEditUsuario.controls['usuario'].touched, 'is-invalid':this.formEditUsuario.get('usuario')?.invalid && this.formEditUsuario.controls['usuario'].touched }" type="text" formControlName="usuario"
                         placeholder=" ">
                     <label for="usuario">USUÁRIO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" formControlName="cpf" placeholder=" " appCpfMask>
+                    <input class="form-control"  [ngClass]="{'is-valid': this.formEditUsuario.get('cpf')?.valid && this.formEditUsuario.controls['cpf'].touched, 'is-invalid':this.formEditUsuario.get('cpf')?.invalid && this.formEditUsuario.controls['cpf'].touched }" type="text" formControlName="cpf" placeholder=" " appCpfMask>
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" formControlName="email">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditUsuario.get('email')?.valid && this.formEditUsuario.controls['email'].touched, 'is-invalid':this.formEditUsuario.get('email')?.invalid && this.formEditUsuario.controls['email'].touched }" placeholder=" " type="email" formControlName="email">
                     <label for="email">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" appPhoneMask>
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditUsuario.get('celular')?.valid && this.formEditUsuario.controls['celular'].touched, 'is-invalid':this.formEditUsuario.get('celular')?.invalid && this.formEditUsuario.controls['celular'].touched }" placeholder=" " type="tel" formControlName="celular" appPhoneMask>
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="password" formControlName="senha">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditUsuario.get('senha')?.valid && this.formEditUsuario.controls['senha'].touched, 'is-invalid':this.formEditUsuario.get('senha')?.invalid && this.formEditUsuario.controls['senha'].touched }" placeholder=" " type="password" formControlName="senha">
                     <label for="senha">SENHA</label>
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary me-4" type="button" (click)="salvarEdicao()">
+                    <button class="btn btn-primary me-4" type="button" [disabled]="formEditUsuario.invalid" (click)="salvarEdicao()">
                         <span *ngIf="!isLoadingSalvar">SALVAR</span>
                         <img *ngIf="isLoadingSalvar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
                     </button>

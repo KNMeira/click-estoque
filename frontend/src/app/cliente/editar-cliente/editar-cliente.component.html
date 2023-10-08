@@ -19,33 +19,33 @@
                     <label for="idEdit">ID</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" formControlName="cliente" id="clienteEdit"
+                    <input class="form-control" [ngClass]="{'is-valid': this.editFormCliente.get('cliente')?.valid && this.editFormCliente.controls['cliente'].touched, 'is-invalid':this.editFormCliente.get('cliente')?.invalid && this.editFormCliente.controls['cliente'].touched }" class="form-control" type="text" formControlName="cliente" id="clienteEdit"
                         placeholder=" ">
                     <label for="clienteEdit">CLIENTE</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="cpfEdit" formControlName="cpf">
+                    <input class="form-control" [ngClass]="{'is-valid': this.editFormCliente.get('cpf')?.valid && this.editFormCliente.controls['cpf'].touched, 'is-invalid':this.editFormCliente.get('cpf')?.invalid && this.editFormCliente.controls['cpf'].touched }"   placeholder=" " type="text" id="cpfEdit" formControlName="cpf">
                     <label for="cpfEdit">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="enderecoClienteEdit" formControlName="endereco">
+                    <input class="form-control" [ngClass]="{'is-valid': this.editFormCliente.get('endereco')?.valid && this.editFormCliente.controls['endereco'].touched, 'is-invalid':this.editFormCliente.get('endereco')?.invalid && this.editFormCliente.controls['endereco'].touched }" placeholder=" " type="text" id="enderecoClienteEdit" formControlName="endereco">
                     <label for="enderecoClienteEdit">ENDEREÇO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" id="emailClienteEdit" formControlName="email">
+                    <input class="form-control" [ngClass]="{'is-valid': this.editFormCliente.get('email')?.valid && this.editFormCliente.controls['email'].touched, 'is-invalid':this.editFormCliente.get('email')?.invalid && this.editFormCliente.controls['email'].touched }" placeholder=" " type="email" id="emailClienteEdit" formControlName="email">
                     <label for="emailClienteEdit">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" id="celularClienteEdit">
+                    <input class="form-control" [ngClass]="{'is-valid': this.editFormCliente.get('celular')?.valid && this.editFormCliente.controls['celular'].touched, 'is-invalid':this.editFormCliente.get('celular')?.invalid && this.editFormCliente.controls['celular'].touched }" placeholder=" " type="tel" formControlName="celular" id="celularClienteEdit">
                     <label for="celularClienteEdit">CELULAR</label>
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button" (click)="editarCliente()">
+                    <button class="btn btn-primary me-4" type="button" [disabled]="editFormCliente.invalid" (click)="editarCliente()">
                         <span *ngIf="!isLoadingEdit">SALVAR</span>
                         <img *ngIf="isLoadingEdit" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
                     </button>

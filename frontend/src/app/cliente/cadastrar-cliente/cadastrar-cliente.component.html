@@ -7,33 +7,33 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" formControlName="cliente" id="cliente"
+                    <input class="form-control"  [ngClass]="{'is-valid': this.formCadastroCliente.get('cliente')?.valid, 'is-invalid': this.formCadastroCliente.get('cliente')?.invalid && this.formCadastroCliente.controls['cliente'].touched }" class="form-control" type="text" formControlName="cliente" id="cliente"
                         placeholder=" ">
                     <label for="cliente">CLIENTE</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="cpf" formControlName="cpf">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('cpf')?.valid, 'is-invalid': this.formCadastroCliente.get('cpf')?.invalid && this.formCadastroCliente.controls['cpf'].touched }" placeholder=" " type="text" id="cpf" formControlName="cpf">
                     <label for="cpf">CPF</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="enderecoCliente" formControlName="enderecoCliente">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('enderecoCliente')?.valid, 'is-invalid': this.formCadastroCliente.get('enderecoCliente')?.invalid && this.formCadastroCliente.controls['enderecoCliente'].touched }" placeholder=" " type="text" id="enderecoCliente" formControlName="enderecoCliente">
                     <label for="enderecoCliente">ENDEREÇO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" id="emailCliente" formControlName="emailCliente">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('emailCliente')?.valid, 'is-invalid': this.formCadastroCliente.get('emailCliente')?.invalid && this.formCadastroCliente.controls['emailCliente'].touched }" placeholder=" " type="email" id="emailCliente" formControlName="emailCliente">
                     <label for="emailCliente">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celularCliente" id="idCelularCliente">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('celularCliente')?.valid, 'is-invalid': this.formCadastroCliente.get('celularCliente')?.invalid && this.formCadastroCliente.controls['celularCliente'].touched }" placeholder=" " type="tel" formControlName="celularCliente" id="idCelularCliente">
                     <label for="idCelularCliente">CELULAR</label>
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" (click)="cadastrarCliente()">
+                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario" [disabled]="formCadastroCliente.invalid" (click)="cadastrarCliente()">
                         <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
                         <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
                     </button>

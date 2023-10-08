@@ -10,10 +10,10 @@ import { ClienteService } from '../cliente.service';
 export class CadastrarClienteComponent {
   public formCadastroCliente: FormGroup = new FormGroup ({
     cliente: new FormControl('', Validators.required),
-    cpf: new FormControl('', Validators.required),
+    cpf: new FormControl('', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
     enderecoCliente: new FormControl('', Validators.required),
-    emailCliente: new FormControl('', Validators.required),
-    celularCliente: new FormControl('', Validators.required)
+    emailCliente: new FormControl('', [Validators.required, Validators.email] ),
+    celularCliente: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)])
   })
 
   public isLoadingCadastrar: boolean = false

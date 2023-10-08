@@ -13,7 +13,7 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" id="fornecedorEdit" formControlName="fornecedor"
+                    <input class="form-control" class="form-control"  [ngClass]="{'is-valid': this.formEditFornecedor.get('fornecedor')?.valid && this.formEditFornecedor.controls['fornecedor'].touched, 'is-invalid':this.formEditFornecedor.get('fornecedor')?.invalid && this.formEditFornecedor.controls['fornecedor'].touched }" type="text" id="fornecedorEdit" formControlName="fornecedor"
                         placeholder=" ">
                     <label for="fornecedorEdit">Fornecedor</label>
                 </div>
@@ -23,27 +23,27 @@
                     <label for="id">ID</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" type="text" formControlName="cnpj" placeholder=" " id="cnpjEdit" appCnpjMask>
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditFornecedor.get('cnpj')?.valid && this.formEditFornecedor.controls['cnpj'].touched, 'is-invalid':this.formEditFornecedor.get('cnpj')?.invalid && this.formEditFornecedor.controls['cnpj'].touched }" type="text" formControlName="cnpj" placeholder=" " id="cnpjEdit" appCnpjMask>
                     <label for="cnpjEdit">CNPJ</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="enderecoEdit" formControlName="endereco">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditFornecedor.get('endereco')?.valid && this.formEditFornecedor.controls['endereco'].touched, 'is-invalid':this.formEditFornecedor.get('endereco')?.invalid && this.formEditFornecedor.controls['endereco'].touched }" placeholder=" " type="text" id="enderecoEdit" formControlName="endereco">
                     <label for="enderecoEdit">ENDERECO</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="email" id="emailEdit" formControlName="email">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditFornecedor.get('email')?.valid && this.formEditFornecedor.controls['email'].touched, 'is-invalid':this.formEditFornecedor.get('email')?.invalid && this.formEditFornecedor.controls['email'].touched }" placeholder=" " type="email" id="emailEdit" formControlName="email">
                     <label for="emailEdit">E-MAIL</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" id="celularEdit" formControlName="celular"    [ngClass]="phoneValidation()">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formEditFornecedor.get('celular')?.valid && this.formEditFornecedor.controls['celular'].touched, 'is-invalid':this.formEditFornecedor.get('celular')?.invalid && this.formEditFornecedor.controls['celular'].touched }" placeholder=" " type="tel" id="celularEdit" formControlName="celular"    [ngClass]="phoneValidation()">
                     <label for="celularEdit">CELULAR</label>
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary me-4" type="button" (click)="editFornecedor()">
+                    <button class="btn btn-primary me-4" type="button" [disabled]="formEditFornecedor.invalid" (click)="editFornecedor()">
                         <span *ngIf="!isLoadingSalvar">SALVAR</span>
                         <img *ngIf="isLoadingSalvar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
 

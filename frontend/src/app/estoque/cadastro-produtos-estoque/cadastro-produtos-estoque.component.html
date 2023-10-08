@@ -8,64 +8,69 @@
             <div class="col-4">
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" class="form-control" type="text" name="peca"
-                        id="peca" placeholder=" " formControlName="peca" [ngClass]="{'is-valid': this.formProduto.get('peca')?.value.length > 0, 'is-invalid': this.formProduto.get('peca')?.value.length == 0 && this.formProduto.controls['peca'].touched }">
+                    <input class="form-control" class="form-control" type="text" name="peca" id="peca" placeholder=" "
+                        formControlName="peca"
+                        [ngClass]="{'is-valid': this.formProduto.get('peca')?.valid, 'is-invalid': this.formProduto.get('peca')?.invalid && this.formProduto.controls['peca'].touched }">
                     <label for="peca">PEÇA</label>
                 </div>
 
-<!--                             <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="idTamanho" name="tamanho">
-                    <label for="tamanho">TAMANHO DROPDOWN</label>
-                </div> -->
-
-                  <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" formControlName="tamanho" [ngClass]="{'is-valid': this.formProduto.get('tamanho')?.value.length > 0, 'is-invalid': this.formProduto.get('tamanho')?.value.length == 0 && this.formProduto.controls['tamanho'].touched }" >
-                      <option selected>Selecione...</option>
-                      <option value="u">U</option>
-                      <option value="pp">PP</option>
-                      <option value="p">P</option>
-                      <option value="m">M</option>
-                      <option value="g">G</option>
-                      <option value="gg">GG</option>
-                      <option value="eg">EG</option>
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingSelect" formControlName="tamanho"
+                        [ngClass]="{'is-valid': this.formProduto.get('tamanho')?.valid, 'is-invalid': this.formProduto.get('tamanho')?.invalid && this.formProduto.controls['tamanho'].touched }">
+                        <option selected>Selecione...</option>
+                        <option value="u">U</option>
+                        <option value="pp">PP</option>
+                        <option value="p">P</option>
+                        <option value="m">M</option>
+                        <option value="g">G</option>
+                        <option value="gg">GG</option>
+                        <option value="eg">EG</option>
                     </select>
                     <label for="floatingSelect">TAMANHO</label>
-                  </div>
+                </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" id="quantidadeProduto" formControlName="quantidade"
-                        name="quantidade" [ngClass]="{'is-valid': this.formProduto.get('quantidade')?.value != '', 'is-invalid': this.formProduto.get('quantidade')?.value == '' && this.formProduto.controls['quantidade'].touched }">
+                    <input class="form-control"
+                        [ngClass]="{'is-valid': this.formProduto.get('quantidade')?.valid, 'is-invalid': this.formProduto.get('quantidade')?.invalid && this.formProduto.controls['quantidade'].touched }"
+                        placeholder=" " type="text" id="quantidadeProduto" formControlName="quantidade"
+                        name="quantidade"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
                     <label for="quantidade">QUANTIDADE</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" formControlName="id_fornecedor" [ngClass]="{'is-valid': this.formProduto.get('id_fornecedor')?.value.length > 0, 'is-invalid': this.formProduto.get('id_fornecedor')?.value.length == 0 && this.formProduto.controls['id_fornecedor'].touched }">
-                      <option *ngFor="let fornecedor of fornecedoresOptions" value ="{{fornecedor.id}}">{{fornecedor.value}}</option>
+                    <select class="form-select" id="floatingSelect" formControlName="id_fornecedor"
+                        [ngClass]="{'is-valid': this.formProduto.get('id_fornecedor')?.valid, 'is-invalid': this.formProduto.get('id_fornecedor')?.invalid && this.formProduto.controls['id_fornecedor'].touched }">
+                        <option *ngFor="let fornecedor of fornecedoresOptions" value="{{fornecedor.id}}">
+                            {{fornecedor.value}}</option>
                     </select>
                     <label for="floatingSelect">FORNECEDOR</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input class="form-control" placeholder=" " type="text" name="valorCompra" ng-pattern="^[0-9]*$"
-                        id="idValorCompra" formControlName="valor_compra" [ngClass]="{'is-valid': this.formProduto.get('valor_compra')?.value != '', 'is-invalid': this.formProduto.get('valor_compra')?.value == '' && this.formProduto.controls['valor_compra'].touched }">
+                        id="idValorCompra" formControlName="valor_compra"
+                        [ngClass]="{'is-valid': this.formProduto.get('valor_compra')?.valid, 'is-invalid': this.formProduto.get('valor_compra')?.invalid && this.formProduto.controls['valor_compra'].touched }"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                     <label for="valorCompra">VALOR DE COMPRA</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="text" name="ValorVenda"
-                        id="idValorVenda" formControlName="valor_venda" [ngClass]="{'is-valid': this.formProduto.get('valor_venda')?.value != '', 'is-invalid': this.formProduto.get('valor_venda')?.value == '' && this.formProduto.controls['valor_venda'].touched }" >
+                    <input class="form-control" placeholder=" " type="text" name="ValorVenda" id="idValorVenda"
+                        formControlName="valor_venda"
+                        [ngClass]="{'is-valid': this.formProduto.get('valor_venda')?.valid, 'is-invalid': this.formProduto.get('valor_venda')?.invalid && this.formProduto.controls['valor_venda'].touched }"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                     <label for="ValorVenda">VALOR DE VENDA</label>
                 </div>
 
                 <div>
-                    <button class="btn btn-primary me-4" type="button"
-                        id="btnCadastrarUsuario" (click)="cadastrarProduto()" [disabled]="this.formProduto.invalid">
+                    <button class="btn btn-primary me-4" type="button" id="btnCadastrarUsuario"
+                        (click)="cadastrarProduto()" [disabled]="this.formProduto.invalid">
                         <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
-                        <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
+                        <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto"
+                            height="20px" alt="">
 
                     </button>
-                    <button class="btn btn-secondary ms-4"
-                        id="btnCancelarUsuario" (click)="logForm()">&nbsp;CANCELAR&nbsp;</button>
+                    <button class="btn btn-secondary ms-4" id="btnCancelarUsuario"
+                        (click)="logForm()">&nbsp;CANCELAR&nbsp;</button>
                 </div>
             </div>
 
