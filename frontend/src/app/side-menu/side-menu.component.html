@@ -5,24 +5,24 @@
                 <span class="image">
                     <img src="./assets/imagens/letter-c.png" alt="logo">
                 </span>
-    
+
                 <div class="text header-text">
                     <span class="name">Click Estoque</span>
                     <span class="company">Êxito Consultoria</span>
                 </div>
             </div>
-    
+
             <i class='bx bx-chevron-right toggle' (click)="sideMenuOpenChange()"></i>
         </header>
-    
+
         <div class="menu-bar">
             <div class="menu">
                 <li class="search-box">
                     <i class='bx bxs-search-alt-2 icon'></i>
                     <input type="search" placeholder="Procurar...">
-    
+
                 </li>
-    
+
                 <ul class="menu-links">
                     <li class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Página Inicial">
                         <a routerLink="home">
@@ -55,10 +55,10 @@
                             <span class="text nav-text">Relatórios</span>
                         </a>
                     </li>
-                    <li class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Notificações">
-                        <a href="notificacoes.html">
-                            <i class='bx bxs-bell icon'></i>
-                            <span class="text nav-text">Notificações</span>
+                    <li class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Vendas">
+                        <a>
+                            <i class='bx bx-dollar icon'></i>
+                            <span class="text nav-text">Vendas</span>
                         </a>
                     </li>
                     <li class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuários">
@@ -81,7 +81,7 @@
                     </li>
                 </ul>
             </div>
-    
+
             <div class="bottom-content">
                 <li class="btn-sair" data-bs-toggle="tooltip" data-bs-placement="right" title="Sair" (click)="sair()">
                     <a>
@@ -95,7 +95,7 @@
                         <i class='bx bxs-sun icon sun'></i>
                     </div>
                     <span class="mode-text text"> {{darkModeText}}</span>
-    
+
                     <div class="toggle-switch">
                         <span class="switch" (click)="isDarkModeChange()"></span>
                     </div>
