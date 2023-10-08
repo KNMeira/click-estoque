@@ -17,10 +17,6 @@ export class CadastrarUsuariosComponent {
     senha: new FormControl('', [Validators.required,]),
   })
 
-  log(){
-    console.log(this.formUsuario.get('celular'))
-  }
-
   public isLoadingCadastrar: boolean = false;
 
   constructor(private usuariosService: UsuariosService) { }

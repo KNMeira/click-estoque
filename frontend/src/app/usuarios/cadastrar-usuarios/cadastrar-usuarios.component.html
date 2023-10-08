@@ -24,12 +24,12 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" (keyup)="log()"
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular"
                         id="celular" appPhoneMask [ngClass]="{'is-valid': this.formUsuario.get('celular')?.valid, 'is-invalid':this.formUsuario.get('celular')?.invalid && this.formUsuario.controls['celular'].touched }">
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="password" formControlName="senha"
+                    <input class="form-control"  [ngClass]="{'is-valid': this.formUsuario.get('senha')?.valid, 'is-invalid': this.formUsuario.get('senha')?.invalid && this.formUsuario.controls['senha'].touched }" placeholder=" " type="password" formControlName="senha"
                         id="senha">
                     <label for="senha">SENHA</label>
                 </div>

@@ -27,7 +27,7 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
     usuario: new FormControl('', Validators.required),
     cpf: new FormControl({ value: '', disabled: true }, [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    celular: new FormControl('', [Validators.required,]),
+    celular: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]),
     senha: new FormControl('', [Validators.required,]),
   })
 
@@ -91,14 +91,5 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
   public changeFiltro() {
     const filtro = this.formBuscar.get('filtro')?.value;
     if (filtro == '') this.isUserLoaded = false;
-  }
-
-  public phoneValidation() {
-    if (this.formEditUsuario.controls['celular'].dirty) {
-      if (this.formEditUsuario.get('celular')?.value.length >= 1 && this.formEditUsuario.get('celular')?.value.length < 14) return 'is-invalid'
-      if (this.formEditUsuario.get('celular')?.value.length >= 14) return 'is-valid'
-      return
-    }
-    return ''
   }
 }
