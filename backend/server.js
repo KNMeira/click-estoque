@@ -99,6 +99,13 @@ app.post('/editar-fornecedor', (req, res) => {
     })
 })
 
+app.post('/delete-fornecedor', (req, res) => {
+    deleteFornecedor(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.get('/estoque', (req, res) => {
     getEstoque().then((response) => {
         let responseJson = JSON.stringify(response)
@@ -450,6 +457,24 @@ async function getUsuario(dadosFiltro) {
 }
 
 //fornecedores
+
+async function deleteFornecedor(idFornecedor) {
+    const client = new Client(connection)
+    await client.connect()
+
+    let del = await client.query('DELETE FROM fornecedores WHERE id = $1', [idFornecedor.id]);
+
+    let response;
+    if (del.rowCount > 0) {
+        response = { status: 200, msg: "Fornecedor excluído com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+
+    }
+
+    await client.end()
+    return response;
+}
 async function saveFornecedor(fornecedor) {
     const values = [fornecedor.fornecedor, fornecedor.cnpj, fornecedor.endereco, fornecedor.email, fornecedor.celular];
     const client = new Client(connection)
@@ -487,21 +512,21 @@ async function getAllFornecedores() {
 async function getFornecedor(filtro) {
     const client = new Client(connection)
     await client.connect()
-    const values = [filtro.cnpj];
-    res = await client.query(`SELECT * FROM fornecedores WHERE cnpj = $1`, values)
+    const values = [filtro.id];
+    res = await client.query(`SELECT * FROM fornecedores WHERE id = $1`, values)
     await client.end()
     return res.rows
 }
 
 async function editFornecedor(fornecedor) {
 
-    const values = [fornecedor.fornecedor, fornecedor.endereco, fornecedor.email, fornecedor.celular, fornecedor.cnpj];
+    const values = [fornecedor.fornecedor, fornecedor.endereco, fornecedor.email, fornecedor.celular, fornecedor.id];
     const client = new Client(connection)
     await client.connect()
 
     let response
 
-    const res = await client.query(`UPDATE fornecedores SET fornecedor = $1, endereco = $2, email = $3, celular = $4 WHERE cnpj = $5`, values)
+    const res = await client.query(`UPDATE fornecedores SET fornecedor = $1, endereco = $2, email = $3, celular = $4 WHERE id = $5`, values)
     await client.end()
 
     if (res.rowCount > 0) {
@@ -509,11 +534,8 @@ async function editFornecedor(fornecedor) {
     } else {
         response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
     }
-
-
+    
     return response
-
-
 }
 
 async function registraLog(obj, evento) {
