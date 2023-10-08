@@ -38,7 +38,7 @@ export class ListarFornecedoresComponent implements OnInit {
       
       if (termoPesquisa != '' && termoPesquisa != undefined) {
         this.fornecedores = allFornecedores.filter((fornecedor: any) => {
-          return fornecedor.email.match(termoPesquisa) || fornecedor.fornecedor.match(termoPesquisa) || fornecedor.celular.match(termoPesquisa) || fornecedor.cnpj.match(termoPesquisa) || fornecedor.endereco.match(termoPesquisa)
+          return fornecedor.email.match(termoPesquisa) || fornecedor.fornecedor.match(termoPesquisa) || fornecedor.celular.match(termoPesquisa) || fornecedor.cnpj.match(termoPesquisa) || fornecedor.endereco.match(termoPesquisa) || fornecedor.id.toString().match(termoPesquisa)
         })
       }
     })  
