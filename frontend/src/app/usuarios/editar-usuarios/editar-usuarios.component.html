@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" appPhoneMask [ngClass]="phoneValidation()">
+                    <input class="form-control" placeholder=" " type="tel" formControlName="celular" appPhoneMask>
                     <label for="celular">CELULAR</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary me-4" type="button" (click)="salvarEdicao()" >
+                    <button class="btn btn-primary me-4" type="button" (click)="salvarEdicao()">
                         <span *ngIf="!isLoadingSalvar">SALVAR</span>
                         <img *ngIf="isLoadingSalvar" src="../../../assets/imagens/loading-pulse.gif" width="auto" height="20px" alt="">
                     </button>
