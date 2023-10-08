@@ -2,8 +2,8 @@
     <div class="container row">
         <div class="col-md-8"></div>
         <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarFornecedor">
-            <input class="form-control me-2" type="text" placeholder="Pesquisar CNPJ"
-                aria-label="pesquisar" formControlName="cnpj" appCnpjMask>
+            <input class="form-control me-2" type="text" placeholder="Pesquisar ID do Fornecedor"
+                aria-label="pesquisar" formControlName="id" appCnpjMask>
             <button class="btn btn-outline-primary" type="button" (click)="buscarFornecedor()">Buscar</button>
         </form>
     </div>
@@ -18,6 +18,10 @@
                     <label for="fornecedorEdit">Fornecedor</label>
                 </div>
 
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="id" placeholder=" " id="id">
+                    <label for="id">ID</label>
+                </div>
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" formControlName="cnpj" placeholder=" " id="cnpjEdit" appCnpjMask>
                     <label for="cnpjEdit">CNPJ</label>

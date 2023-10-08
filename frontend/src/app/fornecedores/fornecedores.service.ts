@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class FornecedoresService {
     private url = "https://ec2-18-191-107-73.us-east-2.compute.amazonaws.com.sslip.io"
+    //private url = "http://localhost:3000"
+
 
     constructor(private httpClient: HttpClient) { }
 
@@ -24,5 +26,9 @@ export class FornecedoresService {
 
     public getFornecedor(cnpj: any): Observable<any> {
         return this.httpClient.post(`${this.url}/fornecedor`, cnpj);
+    }
+
+    public deleteFornecedor(id: any):  Observable<any> {
+        return this.httpClient.post(`${this.url}/delete-fornecedor`, {id: id});
     }
 }

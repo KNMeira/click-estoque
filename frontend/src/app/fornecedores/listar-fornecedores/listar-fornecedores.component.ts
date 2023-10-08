@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FornecedoresService } from '../fornecedores.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -8,6 +8,8 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./listar-fornecedores.component.scss']
 })
 export class ListarFornecedoresComponent implements OnInit {
+
+  @Output() editarClick = new EventEmitter<any>();
   public fornecedoresLoaded = false;
   public fornecedores: any = [];
 
@@ -42,12 +44,31 @@ export class ListarFornecedoresComponent implements OnInit {
     })  
   }
 
-
   public getAllFornecedores() {
     this.fornecedoresService.getAllFornecedores().subscribe((data: any) => {
       this.fornecedores = data
       this.fornecedoresLoaded = true;
     })
+  }
+
+  public confirmDelete(fornecedor: any) {
+    if(confirm(`Tem certeza que deseja deletar o fornecedor ${fornecedor.fornecedor}?` )) {
+      this.deleteFornecedor(fornecedor.id)
+    } 
+  }
+
+
+  public deleteFornecedor(id: any) {
+    this.fornecedoresService.deleteFornecedor(id).subscribe((res) => {
+      alert(res.msg)
+      this.fornecedoresLoaded = false
+      this.getAllFornecedores();
+      
+    })  
+  }
+
+  public editarFornecedor(fornecedor: any) {
+    this.editarClick.emit(fornecedor);
   }
 
 }

@@ -10,7 +10,7 @@ import { EstoqueService } from '../estoque.service';
 export class EditarProdutoEstoqueComponent implements OnInit{
 
   @Input() produtoEdit: any;
-  @Output() produtoEditChange = new EventEmitter<any>;
+  @Output() produtoEditChange = new EventEmitter<any>();
 
   public formPesquisarPeca: FormGroup = new FormGroup({
     filtro: new FormControl('', Validators.required)
@@ -94,6 +94,7 @@ export class EditarProdutoEstoqueComponent implements OnInit{
     this.formPesquisarPeca.reset();
     this.produtoEditChange.emit(this.produtoEdit)
   }
+  
   public getFornecedores() {
     this.estoqueService.getFornecedores().subscribe((res) => {
       res.forEach((fornecedor: any) => {
