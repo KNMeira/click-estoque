@@ -2,7 +2,8 @@
     <div class="container row">
         <div class="col-md-8"></div>
         <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarCliente">
-            <input class="form-control me-2" type="text" placeholder="Pesquisar" aria-label="pesquisarCliente" formControlName="filtro">
+            <input class="form-control me-2" type="text" placeholder="Pesquisar" aria-label="pesquisarCliente"
+                formControlName="filtro">
             <button class="btn btn-outline-primary" type="button" (click)="pesquisarCliente()">Buscar</button>
         </form>
     </div>
@@ -30,8 +31,10 @@
                         <td>{{ cliente.endereco }}</td>
                         <td>{{ cliente.email }}</td>
                         <td>{{ cliente.celular }}</td>
-                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Editar"> <i class='bx bxs-edit-alt action-icon' (click)="editarCliente(cliente)"></i> </td>
-                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Excluir"> <i class='bx bxs-trash action-icon' (click)="confirmDelete(cliente)"></i> </td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Editar"> <i
+                                class='bx bxs-edit-alt action-icon' (click)="editarCliente(cliente)"></i> </td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Excluir"> <i
+                                class='bx bxs-trash action-icon' (click)="confirmDelete(cliente)"></i> </td>
                     </tr>
                 </tbody>
             </table>

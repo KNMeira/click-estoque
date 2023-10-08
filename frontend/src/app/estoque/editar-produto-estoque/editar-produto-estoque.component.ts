@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EstoqueService } from '../estoque.service';
 
@@ -8,6 +8,9 @@ import { EstoqueService } from '../estoque.service';
   styleUrls: ['./editar-produto-estoque.component.scss']
 })
 export class EditarProdutoEstoqueComponent implements OnInit{
+
+  @Input() produtoEdit: any;
+  @Output() produtoEditChange = new EventEmitter<any>;
 
   public formPesquisarPeca: FormGroup = new FormGroup({
     filtro: new FormControl('', Validators.required)
@@ -35,6 +38,16 @@ export class EditarProdutoEstoqueComponent implements OnInit{
 
   ngOnInit(): void {
     this.getFornecedores()
+
+    if (this.produtoEdit != undefined) {
+      this.formEditProduto.patchValue(this.produtoEdit)
+      this.isProdutoLoaded = true;
+    } 
+  }
+
+  ngOnDestroy(): void {
+    this.produtoEdit = undefined;
+    this.produtoEditChange.emit(this.produtoEdit);
   }
   
   public pesquisarPeca() {
@@ -75,8 +88,12 @@ export class EditarProdutoEstoqueComponent implements OnInit{
     })
   }
   
-  public cancelarEdicao() {}
-
+  public cancelarEdicao(){ 
+    this.isProdutoLoaded = false;
+    this.produtoEdit = undefined;
+    this.formPesquisarPeca.reset();
+    this.produtoEditChange.emit(this.produtoEdit)
+  }
   public getFornecedores() {
     this.estoqueService.getFornecedores().subscribe((res) => {
       res.forEach((fornecedor: any) => {

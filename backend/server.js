@@ -134,6 +134,13 @@ app.post('/registrar-saidas', (req, res) => {
     })
 })
 
+app.post('/delete-produto', (req, res) => {
+    deleteProduto(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.post('/cadastro-cliente', (req, res) => {
     cadastrarCliente(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
@@ -213,6 +220,7 @@ async function deleteCliente(cliente) {
     await client.end()
     return response;
 }
+
 async function cadastrarCliente(cliente) {
     const values = [cliente.cliente, cliente.cpf, cliente.enderecoCliente, cliente.emailCliente, cliente.celularCliente]
     const client = new Client(connection)
@@ -266,6 +274,26 @@ async function verificaLogin(dadosLogin) {
 }
 
 //estoque
+
+async function deleteProduto(produto) {
+    const client = new Client(connection)
+    await client.connect()
+
+    let del = await client.query('DELETE FROM produtos WHERE id_peca = $1', [produto.id]);
+
+    let response;
+    if (del.rowCount > 0) {
+        response = { status: 200, msg: "Produto excluído com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+
+    }
+
+    await client.end()
+    return response;
+}
+
+
 async function saveProduto(produto) {
     const values = [produto.peca, produto.tamanho, produto.quantidade, produto.id_fornecedor, produto.valor_compra, produto.valor_venda]
     const client = new Client(connection)

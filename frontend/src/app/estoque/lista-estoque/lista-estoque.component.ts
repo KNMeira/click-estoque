@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { EstoqueService } from '../estoque.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -8,6 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./lista-estoque.component.scss']
 })
 export class ListaEstoqueComponent implements OnInit {
+  @Output() editarClick = new EventEmitter<any>()
   public estoqueLoaded: boolean = false;
   public estoque:any = [];
 
@@ -52,5 +53,25 @@ export class ListaEstoqueComponent implements OnInit {
         })
       }
     })  
+  }
+
+  public confirmDelete(produto: any) {
+    if(confirm(`Tem certeza que deseja deletar o produto ${produto.peca}?` )) {
+      this.deleteProduto(produto.id_peca)
+    } 
+  }
+
+
+  public deleteProduto(idPeca: any) {
+    this.estoqueService.deleteProduto(idPeca).subscribe((res) => {
+      alert(res.msg)
+      this.estoqueLoaded = false
+      this.getEStoque();
+      
+    })  
+  }
+
+  public editarProduto(produto: any) {
+    this.editarClick.emit(produto);
   }
 }

@@ -12,24 +12,30 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>NOME PRODUTO</th>
                         <th>CÓD.</th>
+                        <th>NOME PRODUTO</th>
                         <th>TAMANHO</th>
                         <th>QTD</th>
                         <th>FORNECEDOR</th>
                         <th>R$ COMPRA (UNIT)</th>
                         <th>R$ VENDA (UNIT)</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let produto of estoque">
-                        <td>{{ produto.peca }}</td>
                         <td>{{ produto.id_peca }}</td>
+                        <td>{{ produto.peca }}</td>
                         <td>{{ produto.tamanho }}</td>
                         <td>{{ produto.quantidade }}</td>
                         <td>{{ produto.fornecedor }}</td>
                         <td>{{ produto.valor_compra }}</td>
                         <td>{{ produto.valor_venda }}</td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Editar"> <i
+                                class='bx bxs-edit-alt action-icon' (click)="editarProduto(produto)"></i> </td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="right" title="Excluir"> <i
+                                class='bx bxs-trash action-icon' (click)="confirmDelete(produto)"></i> </td>
                     </tr>
                 </tbody>
             </table>

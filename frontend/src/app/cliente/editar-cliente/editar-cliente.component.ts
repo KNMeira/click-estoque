@@ -46,10 +46,7 @@ export class EditarClienteComponent implements OnInit, OnDestroy{
     if (this.editCliente != undefined) {
       this.editFormCliente.patchValue(this.editCliente)
       this.isClienteLoaded = true;
-    }
-
-
-    
+    }    
   }
 
   public pesquisarCliente() {
