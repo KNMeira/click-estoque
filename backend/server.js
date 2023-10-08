@@ -544,13 +544,13 @@ async function getFornecedor(filtro) {
 
 async function editFornecedor(fornecedor) {
 
-    const values = [fornecedor.fornecedor, fornecedor.endereco, fornecedor.email, fornecedor.celular, fornecedor.id];
+    const values = [fornecedor.fornecedor, fornecedor.endereco, fornecedor.email, fornecedor.celular, fornecedor.cnpj, fornecedor.id];
     const client = new Client(connection)
     await client.connect()
 
     let response
 
-    const res = await client.query(`UPDATE fornecedores SET fornecedor = $1, endereco = $2, email = $3, celular = $4 WHERE id = $5`, values)
+    const res = await client.query(`UPDATE fornecedores SET fornecedor = $1, endereco = $2, email = $3, celular = $4, cnpj = $5 WHERE id = $6`, values)
     await client.end()
 
     if (res.rowCount > 0) {
