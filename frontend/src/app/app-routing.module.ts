@@ -9,6 +9,7 @@ import { SuporteComponent } from './suporte/suporte.component';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './auth/auth.guard';
+import { VendasComponent } from './vendas/vendas.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'cliente', component: ClienteComponent, canActivate: [authGuard]},
   {path: 'fornecedores', component: FornecedoresComponent, canActivate: [authGuard]},
   {path: 'relatorios', component: RelatoriosComponent, canActivate: [authGuard]},
+  {path: 'vendas', component: VendasComponent, canActivate: [authGuard]},
   {path: 'usuarios', component: UsuariosComponent, canActivate: [authGuard]},
   {path: 'suporte', component: SuporteComponent, canActivate: [authGuard]},
   {path: '**', component: HomeComponent, canActivate: [authGuard]},
