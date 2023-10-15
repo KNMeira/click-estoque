@@ -189,6 +189,58 @@ app.post('/editar-cliente', (req, res) => {
         res.send(responseJson)
     })
 })
+
+app.post('/cadastro-venda', (req, res) => {
+    saveVenda(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.status(response.status).send(responseJson)
+    })
+})
+
+//vendas
+async function saveVenda(venda) {
+    const valuesVenda = [venda.idCliente, venda.valorDesconto, venda.valorTotalVenda, moment().format('YYYY-MM-DD')]
+
+    let client = new Client(connection)
+    await client.connect()
+
+    let resVenda = await client.query('INSERT into vendas (id_cliente, valor_desconto,valor_total, data_venda) values ($1, $2, $3, $4) RETURNING id_venda', valuesVenda)
+
+    const idVenda = resVenda.rows[0].id_venda;
+    let valuesDetalheVenda = [];
+    venda.Produtos.forEach((produto) => {
+        valuesDetalheVenda.push([idVenda.toString(), produto.idPeca, produto.quantidade, produto.valorPeca, produto.valorTotalPeca])
+    })
+
+    console.log(valuesDetalheVenda);
+
+    const promises = valuesDetalheVenda.map(async (value) => {
+
+        let resDetalhe = await client.query('INSERT INTO detalhe_venda (id_venda, id_produto, quantidade, valor_unitario, valor_total) values ($1, $2, $3, $4, $5) RETURNING id_detalhe', value)
+        
+        if (resDetalhe.rowCount > 0) {
+            console.log(`Detalhe da venda inserido com sucesso. ID: ${resDetalhe.rows[0].id_detalhe}`);
+        } else {
+            console.error('Erro ao inserir detalhe da venda.');
+        }
+        
+    })
+    
+    await Promise.all(promises);
+    
+    let response;
+    
+    if (resVenda.rowCount > 0) {
+        response = { status: 200, msg: "Venda cadastrada com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+        
+    }
+    
+    await client.end()
+    return response;
+}
+
 //cliente
 
 async function editCliente(cliente) {
@@ -197,7 +249,7 @@ async function editCliente(cliente) {
     await client.connect()
 
     let res = await client.query('UPDATE clientes SET cliente = $1, cpf = $2, email = $3, endereco = $4, celular = $5 WHERE id = $6', values)
-    await client.end()  
+    await client.end()
 
     let response
     if (res.rowCount > 0) {

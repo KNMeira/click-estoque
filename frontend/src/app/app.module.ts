@@ -32,6 +32,7 @@ import { CnpjMaskDirective } from './directives/cnpj-mask.directive';
 import { RegistrarEntradasComponent } from './estoque/registrar-entradas/registrar-entradas.component';
 import { RegistrarSaidasComponent } from './estoque/registrar-saidas/registrar-saidas.component';
 import { VendasComponent } from './vendas/vendas.component';
+import { CadastrarVendasComponent } from './vendas/cadastrar-vendas/cadastrar-vendas.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { VendasComponent } from './vendas/vendas.component';
     PhoneMaskDirective,
     RegistrarEntradasComponent,
     RegistrarSaidasComponent,
-    VendasComponent
+    VendasComponent,
+    CadastrarVendasComponent
   ],
   imports: [
     BrowserModule,

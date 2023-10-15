@@ -1,0 +1,103 @@
+<form class="row mt-5 ms-5" [formGroup]="formVendas">
+
+    <div class="col-4 border-end border-info">
+        <div class="form-floating mb-3">
+            <input class="form-control" type="text" formControlName="idCliente" id="idCliente" placeholder=" " (blur)="getCliente()"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+            <label for="idCliente">ID CLIENTE</label>
+        </div>
+        <div *ngIf="isClienteLoaded">
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" formControlName="cliente" id="cliente" placeholder=" ">
+                <label for="cliente">CLIENTE</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" formControlName="cpf" id="cpf" placeholder=" ">
+                <label for="cpf">CPF</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" formControlName="celular" id="celular" placeholder=" ">
+                <label for="celular">CELULAR</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" formControlName="email" id="email" placeholder=" ">
+                <label for="email">E-MAIL</label>
+            </div>
+        </div>
+        <div *ngIf="showNoClienteMsg">
+            <span>Nenhum cliente encontrado</span>
+        </div>
+        <div class="text-center mt-5" *ngIf="loading && !isClienteLoaded ">
+            <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+            <p>Buscando</p>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div formArrayName="Produtos">
+            <div *ngFor="let produto of Produtos.controls; let i=index" [formGroupName]="i">
+                <div class="row">
+        
+                    <div class="form-floating mb-3 col-4">
+                        <select class="form-select" id="idPeca" formControlName="idPeca" (change)="setValor($event, i)">
+                            <option *ngFor="let peca of pecas" value="{{peca.id}}">
+                                {{peca.value}}</option>
+                        </select>
+                        <label class="ms-2" for="idPeca">Produto</label>
+                    </div>
+            
+                    <div class="form-floating mb-3 col-2">
+                        <input class="form-control" type="text" formControlName="quantidade" id="quantidade" placeholder=" " (blur)="calcularTotalProduto(i)"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                        <label class="ms-2" for="quantidade">Qntd.</label>
+                    </div>
+                    <div class="form-floating mb-3  col-2">
+                        <input class="form-control" type="text" formControlName="valorPeca" id="valorPeca" placeholder=" ">
+                        <label class="ms-2" for="valorPeca">R$ Unt.</label>
+                    </div>
+                    <div class="form-floating mb-3  col-2">
+                        <input class="form-control" type="text" formControlName="valorTotalPeca" id="valorTotalPeca" placeholder=" ">
+                        <label class="ms-2" for="valorTotalPeca">R$ Total</label>
+                    </div>
+                    
+                    <div class="col-2 d-flex align-items-center" *ngIf=" i == Produtos.controls.length-1; else removerProduto">
+                        <i class='bx bxs-plus-circle action-icon' style="color: #2196f3;font-size: 30px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Adicionar Item"  (click)="addProduto()"></i>
+                    </div>
+                    
+                    <ng-template #removerProduto>
+                        <div class="col-2 d-flex align-items-center">
+                            <i class='bx bxs-minus-circle action-icon' style="color: #2196f3;font-size: 30px;" data-bs-toggle="tooltip" data-bs-placement="right" title="Remover Item"  (click)="removeProduto(i)"></i>
+                        </div>
+                        
+                    </ng-template>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-7"></div>
+            <div class="form-floating mb-3 col-3">
+                <input class="form-control" type="text" formControlName="valorDesconto" id="valorDesconto" placeholder=" " (blur)="calcularTotalVenda()"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                <label class="ms-2" for="valorDesconto"> - R$ Desconto</label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-7"></div>
+            <div class="form-floating mb-3 col-3">
+                <input class="form-control" type="text" formControlName="valorTotalVenda" id="valorTotalVenda" placeholder=" ">
+                <label class="ms-2" for="valorTotalVenda">R$ Total Venda</label>
+            </div>
+
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary me-4" type="button" (click)="cadastrarVenda()" [disabled]="this.formVendas.invalid">
+            <span *ngIf="!isLoadingCadastrar">CADASTRAR</span>
+            <img *ngIf="isLoadingCadastrar" src="../../../assets/imagens/loading-pulse.gif" width="auto"
+                height="20px" alt="">
+        </button>
+
+        <button class="btn btn-secondary ms-4">&nbsp;CANCELAR&nbsp;</button>
+    </div>
+
+</form>

@@ -1,33 +1,36 @@
 <div class="ms-5 pt-5 ps-5 nav-justified body" [ngClass]="setDarkMode()">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link" [ngClass]="selectedTab == 0 ? 'active' : ''" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#cadastrar-tab-pane"
-                type="button" role="tab" aria-controls="cadastrar-tab-pane" aria-selected="true"
-                (click)="changeSelectedTab(0)">Cadastrar Vendas</button>
+            <button class="nav-link" [ngClass]="selectedTab == 0 ? 'active' : ''" id="cadastrar-tab"
+                data-bs-toggle="tab" data-bs-target="#cadastrar-tab-pane" type="button" role="tab"
+                aria-controls="cadastrar-tab-pane" aria-selected="true" (click)="changeSelectedTab(0)">Cadastrar
+                Vendas</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" [ngClass]="selectedTab == 1 ? 'active' : ''" id="listar-tab" data-bs-toggle="tab" data-bs-target="#listar-tab-pane"
-                type="button" role="tab" aria-controls="listar-tab-pane" aria-selected="false"
-                (click)="changeSelectedTab(1)">Listar Vendas</button>
+            <button class="nav-link" [ngClass]="selectedTab == 1 ? 'active' : ''" id="listar-tab" data-bs-toggle="tab"
+                data-bs-target="#listar-tab-pane" type="button" role="tab" aria-controls="listar-tab-pane"
+                aria-selected="false" (click)="changeSelectedTab(1)">Listar Vendas</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" [ngClass]="selectedTab == 2 ? 'active' : ''" id="editar-tab" data-bs-toggle="tab" data-bs-target="#editar-tab-pane"
-                type="button" role="tab" aria-controls="editar-tab-pane" aria-selected="false"
-                (click)="changeSelectedTab(2)">Editar Vendas</button>
+            <button class="nav-link" [ngClass]="selectedTab == 2 ? 'active' : ''" id="editar-tab" data-bs-toggle="tab"
+                data-bs-target="#editar-tab-pane" type="button" role="tab" aria-controls="editar-tab-pane"
+                aria-selected="false" (click)="changeSelectedTab(2)">Editar Vendas</button>
         </li>
     </ul>
 
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade" [ngClass]="selectedTab == 0 ? 'show active' : ''" id="cadastrar-tab-pane" role="tabpanel" aria-labelledby="cadastrar-tab"
-            tabindex="0">
-<!--             <app-cadastrar-fornecedores *ngIf="selectedTab == 0"></app-cadastrar-fornecedores>
- -->        </div>
-
-        <div class="tab-pane fade" [ngClass]="selectedTab == 1 ? 'show active' : ''" id="listar-tab-pane" role="tabpanel" aria-labelledby="listar-tab" tabindex="1">
-<!--             <app-listar-fornecedores (editarClick)="openEditarTab($event)" *ngIf="selectedTab == 1"></app-listar-fornecedores> -->
+        <div class="tab-pane fade" [ngClass]="selectedTab == 0 ? 'show active' : ''" id="cadastrar-tab-pane"
+            role="tabpanel" aria-labelledby="cadastrar-tab" tabindex="0">
+            <app-cadastrar-vendas></app-cadastrar-vendas>
         </div>
 
-        <div class="tab-pane fade" [ngClass]="selectedTab == 2 ? 'show active' : ''" id="editar-tab-pane" role="tabpanel" aria-labelledby="editar-tab" tabindex="2">
-            <!-- <app-editar-fornecedores *ngIf="selectedTab == 2" [(fornecedorEdit)]="fornecedorEdit"></app-editar-fornecedores> -->
+        <div class="tab-pane fade" [ngClass]="selectedTab == 1 ? 'show active' : ''" id="listar-tab-pane"
+            role="tabpanel" aria-labelledby="listar-tab" tabindex="1">
+
+        </div>
+
+        <div class="tab-pane fade" [ngClass]="selectedTab == 2 ? 'show active' : ''" id="editar-tab-pane"
+            role="tabpanel" aria-labelledby="editar-tab" tabindex="2">
+
         </div>
     </div>
