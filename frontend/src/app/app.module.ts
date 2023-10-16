@@ -33,6 +33,8 @@ import { RegistrarEntradasComponent } from './estoque/registrar-entradas/registr
 import { RegistrarSaidasComponent } from './estoque/registrar-saidas/registrar-saidas.component';
 import { VendasComponent } from './vendas/vendas.component';
 import { CadastrarVendasComponent } from './vendas/cadastrar-vendas/cadastrar-vendas.component';
+import { ListarVendasComponent } from './vendas/listar-vendas/listar-vendas.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,8 @@ import { CadastrarVendasComponent } from './vendas/cadastrar-vendas/cadastrar-ve
     RegistrarEntradasComponent,
     RegistrarSaidasComponent,
     VendasComponent,
-    CadastrarVendasComponent
+    CadastrarVendasComponent,
+    ListarVendasComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,7 @@ import { CadastrarVendasComponent } from './vendas/cadastrar-vendas/cadastrar-ve
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

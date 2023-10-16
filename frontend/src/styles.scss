@@ -40,7 +40,9 @@ h4 {
     background: var(--body-color) !important;
     transition: var(--tran-04);
     margin: 0px;
+    overflow-x: hidden;
 }
+
 
 .dark{
     --body-color: #18191A;

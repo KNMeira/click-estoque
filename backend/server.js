@@ -197,7 +197,69 @@ app.post('/cadastro-venda', (req, res) => {
     })
 })
 
+app.post('/buscar-vendas', (req, res) => {
+    findVendas(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/delete-venda', (req, res) => {
+    deleteVenda(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 //vendas
+
+async function deleteVenda(id) {
+    const client = new Client(connection)
+    await client.connect()
+
+    let del = await client.query('DELETE FROM vendas WHERE id_venda = $1', [id.id]);
+    del = await client.query(' DELETE FROM detalhe_venda WHERE id_venda = $1', [id.id]);
+
+    let response;
+    if (del.rowCount > 0) {
+        response = { status: 200, msg: "Venda excluída com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+
+    }
+
+    await client.end()
+    return response;
+}
+
+async function findVendas(venda) {
+    let client = new Client(connection)
+    await client.connect()
+
+    let res = await client.query(`SELECT v.id_venda, v.valor_total, v.valor_desconto, v.data_venda, v.id_cliente, c.cliente FROM vendas v, clientes c WHERE v.id_cliente = ${venda.idCliente} AND c.id = ${venda.idCliente} AND v.data_venda = '${venda.data}'`)
+    
+    let vendas = [];
+    if(res.rowCount > 0) {
+        vendas = res.rows;
+        vendas = vendas.map(async (venda) => {
+            res = await client.query(`SELECT d.id_detalhe, d.quantidade, d.valor_unitario, d.valor_total, p.peca
+            FROM detalhe_venda d, produtos p
+            WHERE d.id_venda = ${venda.id_venda}
+            AND p.id_peca = d.id_produto`)
+
+            let detalhe = res.rows;
+            return {...venda, 
+            detalheVenda: detalhe}
+        })
+    } 
+
+    vendas = await Promise.all(vendas)
+    console.log(vendas);
+
+    return vendas;
+
+}
+
 async function saveVenda(venda) {
     const valuesVenda = [venda.idCliente, venda.valorDesconto, venda.valorTotalVenda, moment().format('YYYY-MM-DD')]
 

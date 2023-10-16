@@ -1,0 +1,83 @@
+<div class="mb-5">
+
+    <div class="container row mb-5">
+        <div class="col-md-4"></div>
+        <form class="d-flex col-md-8 text-end mt-5" [formGroup]="formFiltroVendas">
+            <div class="form-floating">
+                <input class="form-control me-2" type="text" id="pesquisar" placeholder="Pesquisar"
+                    formControlName="idCliente">
+                <label for="pesquisar"> ID do Cliente:</label>
+            </div>
+            <div class="form-floating mx-5">
+                <input class="form-control mx-2" type="date" name="" id="date" formControlName="data">
+                <label for="date"> Data:</label>
+            </div>
+            <button class="btn btn-outline-primary" (click)="getVendasFilter()">Buscar</button>
+        </form>
+    </div>
+
+    <div *ngIf="isVendasLoaded" class="row">
+        <div class="col-3"></div>
+        <div class="accordion col-6" id="accordionExample">
+            <div class="accordion-item" *ngFor="let venda of vendas">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#'+ venda.id_venda" aria-expanded="true"
+                        [attr.aria-controls]="venda.id_venda">
+                        ID Venda: {{venda.id_venda}} - Cliente: {{venda.cliente}} -
+                        {{venda.data_venda}} - {{venda.valor_total}}
+                    </button>
+                </h2>
+                <div id="{{venda.id_venda}}" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <table class="table table-sm text-center">
+                            <thead>
+                                <caption>Itens</caption>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Qntd.</th>
+                                    <th>Valor Unit.</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let detalhe of venda.detalheVenda">
+                                    <td>{{ detalhe.peca }}</td>
+                                    <td>{{ detalhe.quantidade }}</td>
+                                    <td>{{ detalhe.valor_unitario }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <p>Desconto: {{venda.valor_desconto}}</p>
+                        <p>Total Venda: {{venda.valor_total}}</p>
+
+                        <div class="text-end">
+                            <span class="me-3" data-bs-toggle="tooltip" data-bs-placement="right" title="Editar">
+                                <i class='bx bxs-edit-alt action-icon'></i>
+                            </span>
+                            <span data-bs-toggle="tooltip" data-bs-placement="right" title="Excluir"
+                                (click)="confirmDelete(venda)">
+                                <i class='bx bxs-trash action-icon'></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="!isVendasLoaded && !loading" class="text-center mt-5">
+        <p>{{ msgBuscar }}</p>
+    </div>
+
+    <div class="text-center mt-5" *ngIf="loading && !isVendasLoaded ">
+        <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+        <p>Buscando</p>
+    </div>
+
+</div>
