@@ -54,7 +54,7 @@ export class CadastroProdutosEstoqueComponent implements OnInit {
   }
 
   public logForm() {
-    console.log(this.formProduto)
+    this.formProduto.reset();
   }
   
 }
