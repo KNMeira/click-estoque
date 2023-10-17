@@ -38,24 +38,24 @@
                 <div class="row">
         
                     <div class="form-floating mb-3 col-4">
-                        <select class="form-select" id="idPeca" formControlName="idPeca" (change)="setValor($event, i)">
+                        <select class="form-select" id="idPeca{{i}}" formControlName="idPeca" (change)="setValor($event, i)">
                             <option *ngFor="let peca of pecas" value="{{peca.id}}">
                                 {{peca.value}}</option>
                         </select>
-                        <label class="ms-2" for="idPeca">Produto</label>
+                        <label class="ms-2" for="idPeca{{i}}">Produto</label>
                     </div>
             
                     <div class="form-floating mb-3 col-2">
-                        <input class="form-control" type="text" formControlName="quantidade" id="quantidade" placeholder=" " (blur)="calcularTotalProduto(i)"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
-                        <label class="ms-2" for="quantidade">Qntd.</label>
+                        <input class="form-control" type="text" formControlName="quantidade" id="quantidade{{i}}" placeholder=" " (blur)="calcularTotalProduto(i)"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                        <label class="ms-2" for="quantidade{{i}}">Qntd.</label>
                     </div>
                     <div class="form-floating mb-3  col-2">
-                        <input class="form-control" type="text" formControlName="valorPeca" id="valorPeca" placeholder=" ">
-                        <label class="ms-2" for="valorPeca">R$ Unt.</label>
+                        <input class="form-control" type="text" formControlName="valorPeca" id="valorPeca{{i}}" placeholder=" ">
+                        <label class="ms-2" for="valorPeca{{i}}">R$ Unt.</label>
                     </div>
                     <div class="form-floating mb-3  col-2">
-                        <input class="form-control" type="text" formControlName="valorTotalPeca" id="valorTotalPeca" placeholder=" ">
-                        <label class="ms-2" for="valorTotalPeca">R$ Total</label>
+                        <input class="form-control" type="text" formControlName="valorTotalPeca" id="valorTotalPeca{{i}}" placeholder=" ">
+                        <label class="ms-2" for="valorTotalPeca{{i}}">R$ Total</label>
                     </div>
                     
                     <div class="col-2 d-flex align-items-center" *ngIf=" i == Produtos.controls.length-1; else removerProduto">

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VendasService } from '../vendas.service';
 
@@ -9,6 +9,9 @@ import { VendasService } from '../vendas.service';
   styleUrls: ['./listar-vendas.component.scss']
 })
 export class ListarVendasComponent {
+
+  @Output() editarClick = new EventEmitter<any>();
+
 
   public formFiltroVendas: FormGroup = new FormGroup({
     idCliente: new FormControl('', Validators.required),
@@ -63,6 +66,10 @@ export class ListarVendasComponent {
       this.getVendasFilter();
       
     })  
+  }
+
+  public editarVenda(venda: any) {
+    this.editarClick.emit(venda);
   }
 
 }

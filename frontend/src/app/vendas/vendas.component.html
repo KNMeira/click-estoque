@@ -21,16 +21,16 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" [ngClass]="selectedTab == 0 ? 'show active' : ''" id="cadastrar-tab-pane"
             role="tabpanel" aria-labelledby="cadastrar-tab" tabindex="0">
-            <app-cadastrar-vendas  *ngIf="selectedTab == 0"></app-cadastrar-vendas>
+            <app-cadastrar-vendas *ngIf="selectedTab == 0"></app-cadastrar-vendas>
         </div>
 
         <div class="tab-pane fade" [ngClass]="selectedTab == 1 ? 'show active' : ''" id="listar-tab-pane"
             role="tabpanel" aria-labelledby="listar-tab" tabindex="1">
-            <app-listar-vendas  *ngIf="selectedTab == 1"></app-listar-vendas>
+            <app-listar-vendas (editarClick)="openEditarTab($event)" *ngIf="selectedTab == 1"></app-listar-vendas>
         </div>
 
         <div class="tab-pane fade" [ngClass]="selectedTab == 2 ? 'show active' : ''" id="editar-tab-pane"
             role="tabpanel" aria-labelledby="editar-tab" tabindex="2">
-
+            <app-editar-vendas [(vendaEdit)]="vendaEdit" *ngIf="selectedTab == 2"></app-editar-vendas>
         </div>
     </div>

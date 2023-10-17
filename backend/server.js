@@ -211,7 +211,36 @@ app.post('/delete-venda', (req, res) => {
     })
 })
 
+app.post('/venda', (req, res) => {
+    getVenda(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
+app.post('/editar-venda', (req, res) => {
+    editVenda(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 //vendas
+
+async function getVenda(filtro) {
+    const client = new Client(connection)
+    await client.connect()
+    const values = [filtro.id];
+    res = await client.query(`SELECT * FROM vendas WHERE id_venda = $1`, values)
+
+    if(res.rowCount > 0) {
+        resDetalhe = await client.query('SELECT * FROM detalhe_venda WHERE id_venda = $1', values)
+        res.rows[0].detalheVenda = resDetalhe.rows
+    }
+
+    await client.end()
+    return res.rows
+}
 
 async function deleteVenda(id) {
     const client = new Client(connection)
@@ -242,7 +271,7 @@ async function findVendas(venda) {
     if(res.rowCount > 0) {
         vendas = res.rows;
         vendas = vendas.map(async (venda) => {
-            res = await client.query(`SELECT d.id_detalhe, d.quantidade, d.valor_unitario, d.valor_total, p.peca
+            res = await client.query(`SELECT d.id_detalhe, d.quantidade, d.valor_unitario, d.valor_total, d.id_produto, p.peca 
             FROM detalhe_venda d, produtos p
             WHERE d.id_venda = ${venda.id_venda}
             AND p.id_peca = d.id_produto`)
@@ -258,6 +287,48 @@ async function findVendas(venda) {
 
     return vendas;
 
+}
+
+async function editVenda(venda) {
+    const valuesVenda = [venda.idCliente, venda.valorDesconto, venda.valorTotalVenda, venda.idVenda]
+
+    let client = new Client(connection)
+    await client.connect()
+
+    let resVenda = await client.query('UPDATE vendas SET id_cliente = $1, valor_desconto = $2 , valor_total = $3  WHERE id_venda = $4', valuesVenda)
+
+    let valuesDetalheVenda = [];
+    venda.Produtos.forEach((produto) => {
+        valuesDetalheVenda.push([ produto.idPeca, produto.quantidade, produto.valorPeca, produto.valorTotalPeca, produto.idDetalhe, venda.idVenda])
+    })
+
+    console.log(valuesDetalheVenda);
+
+    const promises = valuesDetalheVenda.map(async (value) => {
+
+        let resDetalhe = await client.query('UPDATE detalhe_venda set id_produto = $1, quantidade = $2, valor_unitario = $3, valor_total = $4 WHERE id_detalhe = $5 AND id_venda = $6 ', value)
+        
+        if (resDetalhe.rowCount > 0) {
+            console.log(`Detalhe da venda editado com sucesso.`);
+        } else {
+            console.error('Erro ao editar detalhe da venda.');
+        }
+        
+    })
+    
+    await Promise.all(promises);
+    
+    let response;
+    
+    if (resVenda.rowCount > 0) {
+        response = { status: 200, msg: "Venda editada com sucesso" }
+    } else {
+        response = { status: 500, msg: "Erro inesperado, tente novamente" }
+        
+    }
+    
+    await client.end()
+    return response;
 }
 
 async function saveVenda(venda) {

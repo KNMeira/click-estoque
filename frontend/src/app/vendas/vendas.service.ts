@@ -15,12 +15,20 @@ export class VendasService {
         return this.httpClient.post<any>(`${this.url}/cadastro-venda`, venda);
     }
 
+    public editVenda(venda: any) {
+        return this.httpClient.post<any>(`${this.url}/editar-venda`, venda);
+    }
+
     public getVendas(filtro: any) {
         return this.httpClient.post<any>(`${this.url}/buscar-vendas`, filtro);
     }
     
     public deleteVenda(id: any) {
         return this.httpClient.post<any>(`${this.url}/delete-venda`, {id: id});
+    }
+
+    public getVenda(id: any) {
+        return this.httpClient.post<any>(`${this.url}/venda`, id);
     }
 
 }

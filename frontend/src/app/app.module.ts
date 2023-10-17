@@ -35,6 +35,7 @@ import { VendasComponent } from './vendas/vendas.component';
 import { CadastrarVendasComponent } from './vendas/cadastrar-vendas/cadastrar-vendas.component';
 import { ListarVendasComponent } from './vendas/listar-vendas/listar-vendas.component';
 import { DatePipe } from '@angular/common';
+import { EditarVendasComponent } from './vendas/editar-vendas/editar-vendas.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { DatePipe } from '@angular/common';
     RegistrarSaidasComponent,
     VendasComponent,
     CadastrarVendasComponent,
-    ListarVendasComponent
+    ListarVendasComponent,
+    EditarVendasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,113 @@
+<div>
+    <div class="container row">
+        <div class="col-md-8"></div>
+        <form class="d-flex col-md-4 text-end mt-5" [formGroup]="formPesquisarVenda">
+            <input class="form-control me-2" type="text" placeholder="Pesquisar ID da Venda"
+                aria-label="pesquisar" formControlName="id" appCnpjMask>
+            <button class="btn btn-outline-primary" type="button" (click)="buscarVenda()">Buscar</button>
+        </form>
+    </div>
+
+
+    <form class="row mt-5 ms-5" [formGroup]="formVendasEdit" *ngIf="isVendaLoaded">
+    
+        <div class="col-4 border-end border-info">
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" formControlName="idCliente" id="idCliente" placeholder=" " (blur)="getCliente()"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                <label for="idCliente">ID CLIENTE</label>
+            </div>
+            <div *ngIf="isClienteLoaded">
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="cliente" id="cliente" placeholder=" ">
+                    <label for="cliente">CLIENTE</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="cpf" id="cpf" placeholder=" ">
+                    <label for="cpf">CPF</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="celular" id="celular" placeholder=" ">
+                    <label for="celular">CELULAR</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" formControlName="email" id="email" placeholder=" ">
+                    <label for="email">E-MAIL</label>
+                </div>
+            </div>
+            <div *ngIf="showNoClienteMsg">
+                <span>Nenhum cliente encontrado</span>
+            </div>
+            <div class="text-center mt-5" *ngIf="loadingCliente && !isClienteLoaded ">
+                <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+                <p>Buscando</p>
+            </div>
+        </div>
+    
+        <div class="col-8">
+            <div formArrayName="Produtos">
+                <div *ngFor="let produto of Produtos.controls; let i=index" [formGroupName]="i">
+                    <div class="row">
+            
+                        <div class="form-floating mb-3 col-4">
+                            <select class="form-select" id="idPeca{{i}}" formControlName="idPeca" (change)="setValor($event, i)">
+                                <option *ngFor="let peca of pecas" value="{{peca.id}}">
+                                    {{peca.value}}</option>
+                            </select>
+                            <label class="ms-2" for="idPeca{{i}}">Produto</label>
+                        </div>
+                
+                        <div class="form-floating mb-3 col-2">
+                            <input class="form-control" type="text" formControlName="quantidade" id="quantidade{{i}}" placeholder=" " (blur)="calcularTotalProduto(i)"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                            <label class="ms-2" for="quantidade{{i}}">Qntd.</label>
+                        </div>
+                        <div class="form-floating mb-3  col-2">
+                            <input class="form-control" type="text" formControlName="valorPeca" id="valorPeca{{i}}" placeholder=" ">
+                            <label class="ms-2" for="valorPeca{{i}}">R$ Unt.</label>
+                        </div>
+                        <div class="form-floating mb-3  col-2">
+                            <input class="form-control" type="text" formControlName="valorTotalPeca" id="valorTotalPeca{{i}}" placeholder=" ">
+                            <label class="ms-2" for="valorTotalPeca{{i}}">R$ Total</label>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+            <div class="row">
+                <div class="col-7"></div>
+                <div class="form-floating mb-3 col-3">
+                    <input class="form-control" type="text" formControlName="valorDesconto" id="valorDesconto" placeholder=" " (blur)="calcularTotalVenda()"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    <label class="ms-2" for="valorDesconto"> - R$ Desconto</label>
+                </div>
+    
+            </div>
+            <div class="row">
+                <div class="col-7"></div>
+                <div class="form-floating mb-3 col-3">
+                    <input class="form-control" type="text" formControlName="valorTotalVenda" id="valorTotalVenda" placeholder=" ">
+                    <label class="ms-2" for="valorTotalVenda">R$ Total Venda</label>
+                </div>
+    
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary me-4" type="button" (click)="editarVenda()" [disabled]="this.formVendasEdit.invalid">
+                <span *ngIf="!isLoadingEdit">SALVAR</span>
+                <img *ngIf="isLoadingEdit" src="../../../assets/imagens/loading-pulse.gif" width="auto"
+                    height="20px" alt="">
+            </button>
+    
+            <button class="btn btn-secondary ms-4" type="button" (click)="cancelarEdit()">&nbsp;CANCELAR&nbsp;</button>
+        </div>
+    
+    </form>
+
+    <div class="text-center mt-5" *ngIf="!isVendaLoaded && !loading">
+        {{ msgBusca }}
+    </div>
+
+    <div class="text-center mt-5" *ngIf="!isVendaLoaded && loading">
+        <img src="../../../assets/imagens/loading-busca.gif" width="auto" height="100px" alt="">
+        <p>Buscando</p>
+    </div>
+</div>
