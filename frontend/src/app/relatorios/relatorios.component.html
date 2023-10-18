@@ -1,16 +1,17 @@
 <div class="ms-5 pt-5 ps-5 nav-justified body" [ngClass]="setDarkMode()">
     <h4 class="my-5 text-center">RELATÓRIOS GERENCIAIS</h4>
 
-    
-    
-    <div class="row">
-        <div class="col-3"></div>
+
+
+    <div class="row" [formGroup]="formRelatorio">
+        <div class="col-2"></div>
         <div class="col-3 align-self-center">
             <div class="form-floating">
-                <select class="form-select" id="floatingSelect">
+                <select class="form-select" id="floatingSelect" formControlName="tipoRelatorio" (change)="tipoRelatorioChange()">
                     <option selected>Selecione...</option>
                     <option value="estoque">ESTOQUE</option>
-                    <option value="cliente">CLIENTES</option>
+                    <option value="entradasSaidas">ESTOQUE - Entradas e Saídas </option>
+                    <option value="clientes">CLIENTES</option>
                     <option value="fornecedores">FORNECEDORES</option>
                     <option value="usuarios">USUÁRIOS</option>
                 </select>
@@ -18,15 +19,44 @@
             </div>
 
         </div>
-        <div class="col-3 align-self-center">
-            <div class="form-floating">
-                <input class="form-control" type="date" name="" id="date">
-                <label for="date"> Data:</label>
+        <div class="col-4 row align-self-center" *ngIf="formRelatorio.get('tipoRelatorio')?.value == 'entradasSaidas'">
+            <div class="col-6">
+                <div class="ms-2 form-floating">
+                    <input class=" form-control" type="date" name="" id="dataInicio">
+                    <label for="dataInicio"> Data Início:</label>
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="ms-2 form-floating">
+                    <input class="form-control" type="date" name="" id="dataFim">
+                    <label for="dataFim"> Data Fim:</label>
+                </div>
+
             </div>
 
         </div>
         <div class="col-3 align-self-center">
-            <button class="btn btn-primary me-4 col" type="button" id="btnCadastrarUsuario">GERAR</button>
+            <button class="btn btn-primary me-4 col" type="button"
+                (click)="gerarRelatorio()">GERAR</button>
+            <button class="btn btn-primary me-4 col" type="button" [disabled]="!showTable"
+                (click)="exportexcel()">EXPORTAR</button>
         </div>
+    </div>
+
+
+    <div *ngIf="showTable">
+        <table id="excel-table" class="mt-3 table">
+            <thead>
+                <tr>
+                    <th *ngFor="let th of objectKeys(table[0])">{{ th.toUpperCase() }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let dados of table">
+                    <td *ngFor="let td of objectEntries(dados); index as i">{{td[1]}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
