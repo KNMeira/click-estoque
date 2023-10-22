@@ -23,6 +23,10 @@ export class EstoqueService {
         return this.httpClient.get<any>(`${this.url}/estoque`);
     }
 
+    public getMovimentacaoEstoque(periodo: any): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/estoque-logs`, periodo);
+    }
+
     public getPeca(codigo:any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/peca`, codigo);
     }

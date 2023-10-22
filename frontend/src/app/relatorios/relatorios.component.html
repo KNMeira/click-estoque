@@ -9,27 +9,28 @@
             <div class="form-floating">
                 <select class="form-select" id="floatingSelect" formControlName="tipoRelatorio" (change)="tipoRelatorioChange()">
                     <option selected>Selecione...</option>
+                    <option value="clientes">CLIENTES</option>
                     <option value="estoque">ESTOQUE</option>
                     <option value="entradasSaidas">ESTOQUE - Entradas e Saídas </option>
-                    <option value="clientes">CLIENTES</option>
                     <option value="fornecedores">FORNECEDORES</option>
                     <option value="usuarios">USUÁRIOS</option>
+                    <option value="vendas">VENDAS</option>
                 </select>
                 <label for="floatingSelect"> Relatório de:</label>
             </div>
 
         </div>
-        <div class="col-4 row align-self-center" *ngIf="formRelatorio.get('tipoRelatorio')?.value == 'entradasSaidas'">
+        <div class="col-4 row align-self-center" *ngIf="formRelatorio.get('tipoRelatorio')?.value == 'entradasSaidas' || formRelatorio.get('tipoRelatorio')?.value == 'vendas'">
             <div class="col-6">
                 <div class="ms-2 form-floating">
-                    <input class=" form-control" type="date" name="" id="dataInicio">
+                    <input class=" form-control" type="date" name="" id="dataInicio" formControlName="dataInicio">
                     <label for="dataInicio"> Data Início:</label>
                 </div>
 
             </div>
             <div class="col-6">
                 <div class="ms-2 form-floating">
-                    <input class="form-control" type="date" name="" id="dataFim">
+                    <input class="form-control" type="date" name="" id="dataFim" formControlName="dataFim">
                     <label for="dataFim"> Data Fim:</label>
                 </div>
 

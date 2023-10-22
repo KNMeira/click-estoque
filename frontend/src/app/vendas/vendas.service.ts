@@ -22,6 +22,10 @@ export class VendasService {
     public getVendas(filtro: any) {
         return this.httpClient.post<any>(`${this.url}/buscar-vendas`, filtro);
     }
+
+    public getVendasRelatorio(periodo: any) {
+        return this.httpClient.post<any>(`${this.url}/vendas-logs`, periodo);
+    }
     
     public deleteVenda(id: any) {
         return this.httpClient.post<any>(`${this.url}/delete-venda`, {id: id});

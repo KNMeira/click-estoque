@@ -120,6 +120,13 @@ app.get('/estoque', (req, res) => {
     })
 })
 
+app.post('/estoque-logs', (req, res) => {
+    getEstoqueLogs(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.post('/peca', (req, res) => {
     getPeca(req.body.cod).then((response) => {
         let responseJson = JSON.stringify(response)
@@ -204,6 +211,13 @@ app.post('/buscar-vendas', (req, res) => {
     })
 })
 
+app.post('/vendas-logs', (req, res) => {
+    getVendasLogs(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.post('/delete-venda', (req, res) => {
     deleteVenda(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
@@ -226,6 +240,16 @@ app.post('/editar-venda', (req, res) => {
 })
 
 //vendas
+
+async function getVendasLogs(periodo) {
+    const values = [periodo.dataInicio, periodo.dataFim];
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT v.data_venda, v.valor_total, v.valor_desconto, c.cliente FROM vendas v, clientes c WHERE v.data_venda BETWEEN $1 AND $2 AND v.id_cliente = c.id ORDER BY v.data_venda', values )
+    await client.end()
+    return res.rows
+
+}
 
 async function getVenda(filtro) {
     const client = new Client(connection)
@@ -522,6 +546,15 @@ async function getPeca(cod) {
     const client = new Client(connection)
     await client.connect()
     res = await client.query('SELECT * FROM produtos WHERE id_peca = $1', [cod])
+    await client.end()
+    return res.rows
+}
+
+async function getEstoqueLogs(periodo) {
+    const values = [periodo.dataInicio, periodo.dataFim];
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT l.data, l.qtd, l.evento, p.peca, p.tamanho, f.fornecedor FROM entradas_saidas_logs l, produtos p, fornecedores f  WHERE l.data BETWEEN $1 AND $2 AND l.id_peca = p.id_peca AND p.id_fornecedor = f.id ORDER BY l.data', values )
     await client.end()
     return res.rows
 }

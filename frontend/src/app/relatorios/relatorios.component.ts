@@ -5,6 +5,8 @@ import { UsuariosService } from '../usuarios/usuarios.service';
 import { ClienteService } from '../cliente/cliente.service';
 import { EstoqueService } from '../estoque/estoque.service';
 import { FornecedoresService } from '../fornecedores/fornecedores.service';
+import { DatePipe } from '@angular/common';
+import { VendasService } from '../vendas/vendas.service';
 
 
 @Component({
@@ -15,7 +17,9 @@ import { FornecedoresService } from '../fornecedores/fornecedores.service';
 export class RelatoriosComponent {
 
   public formRelatorio: FormGroup = new FormGroup({
-    tipoRelatorio: new FormControl('', Validators.required)
+    tipoRelatorio: new FormControl('', Validators.required),
+    dataInicio: new FormControl(''),
+    dataFim: new FormControl('')
   })
 
   public objectKeys = Object.keys;
@@ -23,11 +27,18 @@ export class RelatoriosComponent {
   public table!: any;
   public showTable: boolean = false;
 
-  constructor(private usuariosService: UsuariosService, private clientesService: ClienteService, private estoqueService: EstoqueService, private fornecedoresService: FornecedoresService) { }
+  constructor(private usuariosService: UsuariosService, private clientesService: ClienteService, private estoqueService: EstoqueService, private fornecedoresService: FornecedoresService, private vendasService: VendasService, private datePipe: DatePipe) { }
 
   public gerarRelatorio() {
     this.showTable = false;
     const tipoRelatorio = this.formRelatorio.get('tipoRelatorio')?.value;
+    const dataInicio = this.formRelatorio.get('dataInicio')?.value;
+    const dataFim = this.formRelatorio.get('dataFim')?.value;
+
+    if ((tipoRelatorio == 'entradasSaidas' || tipoRelatorio == 'vendas' ) && (dataInicio == '' || dataFim == '')) {
+      alert('Preencha os campos de data')
+      return
+    }
 
     switch (tipoRelatorio) {
       case 'usuarios':
@@ -56,7 +67,7 @@ export class RelatoriosComponent {
 
       case 'estoque':
         this.estoqueService.getEstoque().subscribe((res: any) => {
-          res = res.map((e:any) => {
+          res = res.map((e: any) => {
             return {
               produto: e.peca,
               id: e.id_peca,
@@ -73,6 +84,39 @@ export class RelatoriosComponent {
 
         break;
 
+      case 'entradasSaidas':
+        this.estoqueService.getMovimentacaoEstoque(this.formRelatorio.value).subscribe((res) => {
+          res = res.map((e:any) => {
+            return {
+              data: this.datePipe.transform(e.data, 'dd/MM/yyyy'),
+              evento: e.evento == 'S' ? 'SAÍDA' : 'ENTRADA',
+              produto: e.peca,
+              tamanho: e.tamanho.toUpperCase(),
+              quantidade: e.qtd,
+              fornecedor: e.fornecedor 
+            }
+          })
+
+          this.table = res
+          this.showTable = true
+        })
+
+        break;
+
+      case 'vendas':
+        this.vendasService.getVendasRelatorio(this.formRelatorio.value).subscribe((res) => {
+          res = res.map((e: any) => {
+            return {
+              data: this.datePipe.transform(e.data_venda, 'dd/MM/yyyy'),
+              ['valor total']: e.valor_total.replace('$', ''),
+              ['valor desconto']: e.valor_desconto.replace('$', ''),
+              cliente: e.cliente
+            }
+          })
+          this.table = res
+          this.showTable = true
+        })
+        break;
       default:
         break;
     }
@@ -91,7 +135,6 @@ export class RelatoriosComponent {
     /* pass here the table id */
     let element = document.getElementById('excel-table');
 
-    console.log(element)
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
 
     /* generate workbook and add the worksheet */
