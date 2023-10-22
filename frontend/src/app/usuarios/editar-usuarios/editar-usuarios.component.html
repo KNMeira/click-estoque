@@ -12,6 +12,11 @@
         <form class="row" [formGroup]="formEditUsuario">
             <div class="col-4"></div>
             <div class="col-4">
+                <div class="form-floating mb-3  mt-3">
+                    <input class="form-control" class="form-control" type="text" formControlName="id" id="idEdit"
+                        placeholder=" ">
+                    <label for="idEdit">ID</label>
+                </div>
                 <div class="form-floating mb-3">
                     <input class="form-control" class="form-control"  [ngClass]="{'is-valid': this.formEditUsuario.get('usuario')?.valid && this.formEditUsuario.controls['usuario'].touched, 'is-invalid':this.formEditUsuario.get('usuario')?.invalid && this.formEditUsuario.controls['usuario'].touched }" type="text" formControlName="usuario"
                         placeholder=" ">

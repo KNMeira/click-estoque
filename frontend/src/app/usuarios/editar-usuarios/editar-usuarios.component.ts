@@ -25,7 +25,7 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
 
   public formEditUsuario: FormGroup = new FormGroup({
     usuario: new FormControl('', Validators.required),
-    id: new FormControl('', Validators.required),
+    id: new FormControl({value:'', disabled: true}, Validators.required),
     cpf: new FormControl( '', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     celular: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]),
