@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('cpf')?.valid, 'is-invalid': this.formCadastroCliente.get('cpf')?.invalid && this.formCadastroCliente.controls['cpf'].touched }" placeholder=" " type="text" id="cpf" formControlName="cpf">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('cpf')?.valid, 'is-invalid': this.formCadastroCliente.get('cpf')?.invalid && this.formCadastroCliente.controls['cpf'].touched }" placeholder=" " type="text" id="cpf" formControlName="cpf" appCpfMask>
                     <label for="cpf">CPF</label>
                 </div>
 
