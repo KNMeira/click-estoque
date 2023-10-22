@@ -80,7 +80,11 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
 
   public salvarEdicao() {
     this.isLoadingSalvar = true;
-    this.usuarioService.editarUsuario(this.formEditUsuario.value).subscribe((res) => {
+    const data = {
+      ...this.formEditUsuario.value,
+      id: this.formEditUsuario.get('id')?.value
+    }
+    this.usuarioService.editarUsuario(data).subscribe((res) => {
       alert(res.msg)
     this.isLoadingSalvar = false;
 
