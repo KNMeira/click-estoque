@@ -23,7 +23,7 @@
                                 <li class="list-group-item">A third item</li>-->
                                 </ul>
                                 <div class="card-body">
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <a href="https://wa.me/551999777777777/" target="_blank" class="btn btn-primary">Iniciar Conversa</a>
                                     <!--  <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> -->
                                 </div>
@@ -40,7 +40,8 @@
                                     <li class="list-group-item">suporte@exitoconsultoria.br</li>
                                 </ul>
                                 <div class="card-body">
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <a class="btn btn-primary" (click)="copyEmail()">Copiar e-mail</a>
+                                    <p *ngIf="showEmailCopiado">E-mail copiado!</p>
                                     <!--  <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> -->
                                 </div>
@@ -59,7 +60,9 @@
                                 <li class="list-group-item">A third item</li> -->
                                 </ul>
                                 <div class="card-body">
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <a  class="btn btn-primary" (click)="copyTel()">Copiar Telefone</a>
+                                    <p *ngIf="showTelCopiado">Telefone copiado!</p>
+
                                     <!--  <a href="#" class="card-link">Card link</a>
                                       <a href="#" class="card-link">Another link</a> -->
                                 </div>
