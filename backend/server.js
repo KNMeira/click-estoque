@@ -252,7 +252,7 @@ async function getVendasLogs(periodo) {
     const values = [periodo.dataInicio, periodo.dataFim];
     const client = new Client(connection)
     await client.connect()
-    res = await client.query('SELECT v.data_venda, v.valor_total, v.valor_desconto, c.cliente FROM vendas v, clientes c WHERE v.data_venda BETWEEN $1 AND $2 AND v.id_cliente = c.id ORDER BY v.data_venda', values )
+    res = await client.query('SELECT v.data_venda, v.valor_total, v.valor_desconto, c.cliente FROM vendas v, clientes c WHERE v.data_venda BETWEEN $1 AND $2 AND v.id_cliente = c.id ORDER BY v.data_venda', values)
     await client.end()
     return res.rows
 
@@ -264,7 +264,7 @@ async function getVenda(filtro) {
     const values = [filtro.id];
     res = await client.query(`SELECT * FROM vendas WHERE id_venda = $1`, values)
 
-    if(res.rowCount > 0) {
+    if (res.rowCount > 0) {
         resDetalhe = await client.query('SELECT * FROM detalhe_venda WHERE id_venda = $1', values)
         res.rows[0].detalheVenda = resDetalhe.rows
     }
@@ -297,9 +297,9 @@ async function findVendas(venda) {
     await client.connect()
 
     let res = await client.query(`SELECT v.id_venda, v.valor_total, v.valor_desconto, v.data_venda, v.id_cliente, c.cliente FROM vendas v, clientes c WHERE v.id_cliente = ${venda.idCliente} AND c.id = ${venda.idCliente} AND v.data_venda = '${venda.data}'`)
-    
+
     let vendas = [];
-    if(res.rowCount > 0) {
+    if (res.rowCount > 0) {
         vendas = res.rows;
         vendas = vendas.map(async (venda) => {
             res = await client.query(`SELECT d.id_detalhe, d.quantidade, d.valor_unitario, d.valor_total, d.id_produto, p.peca 
@@ -308,10 +308,12 @@ async function findVendas(venda) {
             AND p.id_peca = d.id_produto`)
 
             let detalhe = res.rows;
-            return {...venda, 
-            detalheVenda: detalhe}
+            return {
+                ...venda,
+                detalheVenda: detalhe
+            }
         })
-    } 
+    }
 
     vendas = await Promise.all(vendas)
     console.log(vendas);
@@ -330,7 +332,7 @@ async function editVenda(venda) {
 
     let valuesDetalheVenda = [];
     venda.Produtos.forEach((produto) => {
-        valuesDetalheVenda.push([ produto.idPeca, produto.quantidade, produto.valorPeca, produto.valorTotalPeca, produto.idDetalhe, venda.idVenda])
+        valuesDetalheVenda.push([produto.idPeca, produto.quantidade, produto.valorPeca, produto.valorTotalPeca, produto.idDetalhe, venda.idVenda])
     })
 
     console.log(valuesDetalheVenda);
@@ -338,26 +340,26 @@ async function editVenda(venda) {
     const promises = valuesDetalheVenda.map(async (value) => {
 
         let resDetalhe = await client.query('UPDATE detalhe_venda set id_produto = $1, quantidade = $2, valor_unitario = $3, valor_total = $4 WHERE id_detalhe = $5 AND id_venda = $6 ', value)
-        
+
         if (resDetalhe.rowCount > 0) {
             console.log(`Detalhe da venda editado com sucesso.`);
         } else {
             console.error('Erro ao editar detalhe da venda.');
         }
-        
+
     })
-    
+
     await Promise.all(promises);
-    
+
     let response;
-    
+
     if (resVenda.rowCount > 0) {
         response = { status: 200, msg: "Venda editada com sucesso" }
     } else {
         response = { status: 500, msg: "Erro inesperado, tente novamente" }
-        
+
     }
-    
+
     await client.end()
     return response;
 }
@@ -381,26 +383,26 @@ async function saveVenda(venda) {
     const promises = valuesDetalheVenda.map(async (value) => {
 
         let resDetalhe = await client.query('INSERT INTO detalhe_venda (id_venda, id_produto, quantidade, valor_unitario, valor_total) values ($1, $2, $3, $4, $5) RETURNING id_detalhe', value)
-        
+
         if (resDetalhe.rowCount > 0) {
             console.log(`Detalhe da venda inserido com sucesso. ID: ${resDetalhe.rows[0].id_detalhe}`);
         } else {
             console.error('Erro ao inserir detalhe da venda.');
         }
-        
+
     })
-    
+
     await Promise.all(promises);
-    
+
     let response;
-    
+
     if (resVenda.rowCount > 0) {
         response = { status: 200, msg: "Venda cadastrada com sucesso" }
     } else {
         response = { status: 500, msg: "Erro inesperado, tente novamente" }
-        
+
     }
-    
+
     await client.end()
     return response;
 }
@@ -569,7 +571,7 @@ async function getEstoqueLogs(periodo) {
     const values = [periodo.dataInicio, periodo.dataFim];
     const client = new Client(connection)
     await client.connect()
-    res = await client.query('SELECT l.data, l.qtd, l.evento, p.peca, p.tamanho, f.fornecedor FROM entradas_saidas_logs l, produtos p, fornecedores f  WHERE l.data BETWEEN $1 AND $2 AND l.id_peca = p.id_peca AND p.id_fornecedor = f.id ORDER BY l.data', values )
+    res = await client.query('SELECT l.data, l.qtd, l.evento, p.peca, p.tamanho, f.fornecedor FROM entradas_saidas_logs l, produtos p, fornecedores f  WHERE l.data BETWEEN $1 AND $2 AND l.id_peca = p.id_peca AND p.id_fornecedor = f.id ORDER BY l.data', values)
     await client.end()
     return res.rows
 }
@@ -669,24 +671,18 @@ async function saveUsuario(usuario) {
 }
 
 async function editUsuario(usuario) {
-    const values = [usuario.usuario, usuario.senha, usuario.email, usuario.celular, usuario.cpf];
+    const values = [usuario.usuario, usuario.senha, usuario.email, usuario.celular, usuario.cpf, usuario.id];
     const client = new Client(connection)
     await client.connect()
 
-    const valuesVerify = [usuario.usuario, usuario.email, usuario.celular]
-    let verificaSingularidade = await client.query('SELECT * FROM usuarios WHERE usuario = $1 OR email = $2 OR celular = $3 ', valuesVerify);
-
     let response
-    if (verificaSingularidade.rowCount > 0) {
-        response = { status: 400, msg: 'Não é possível salvar a edição, já existe registro usando esse(s) dado(s)' }
-    } else {
-        const res = await client.query(`UPDATE usuarios SET usuario = $1  senha = $2 email = $3 celular = $4 WHERE cpf = $5)`, values)
 
-        if (res.rowCount > 0) {
-            response = { status: 201, msg: 'Edição salva com sucesso' }
-        } else {
-            response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
-        }
+    const res = await client.query(`UPDATE usuarios SET usuario = $1, senha = $2, email = $3, celular = $4, cpf = $5 WHERE id = $6`, values)
+
+    if (res.rowCount > 0) {
+        response = { status: 201, msg: 'Edição salva com sucesso' }
+    } else {
+        response = { status: 500, msg: 'Não foi possível salvar, tente novamente' }
     }
 
     await client.end()
@@ -707,8 +703,7 @@ async function getUsuario(dadosFiltro) {
     const client = new Client(connection)
     await client.connect()
     const values = [dadosFiltro.filtro];
-    const columnName = dadosFiltro.tipoBusca;
-    res = await client.query(`SELECT * FROM usuarios WHERE ${columnName} = $1`, values)
+    res = await client.query(`SELECT * FROM usuarios WHERE id = $1`, values)
     await client.end()
     return res.rows
 }

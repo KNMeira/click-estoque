@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('celularCliente')?.valid, 'is-invalid': this.formCadastroCliente.get('celularCliente')?.invalid && this.formCadastroCliente.controls['celularCliente'].touched }" placeholder=" " type="tel" formControlName="celularCliente" id="idCelularCliente">
+                    <input class="form-control" [ngClass]="{'is-valid': this.formCadastroCliente.get('celularCliente')?.valid, 'is-invalid': this.formCadastroCliente.get('celularCliente')?.invalid && this.formCadastroCliente.controls['celularCliente'].touched }" placeholder=" " type="tel" formControlName="celularCliente" id="idCelularCliente" appPhoneMask>
                     <label for="idCelularCliente">CELULAR</label>
                 </div>
 

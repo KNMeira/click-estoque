@@ -25,7 +25,8 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
 
   public formEditUsuario: FormGroup = new FormGroup({
     usuario: new FormControl('', Validators.required),
-    cpf: new FormControl({ value: '', disabled: true }, [Validators.required]),
+    id: new FormControl('', Validators.required),
+    cpf: new FormControl( '', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     celular: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]),
     senha: new FormControl('', [Validators.required,]),
@@ -47,9 +48,8 @@ export class EditarUsuariosComponent implements OnInit, OnDestroy {
   }
 
   public buscarUsuario() {
-    if (this.formBuscar.get('filtro')?.value == '' || this.formBuscar.get('tipoBusca')?.value == '') {
+    if (this.formBuscar.get('filtro')?.value == '') {
       alert('Preencha o filtro de busca')
-      this.formEditUsuario.controls['celular'].dirty
       return;
     }
     this.isUserLoaded = false;
