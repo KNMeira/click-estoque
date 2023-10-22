@@ -134,6 +134,13 @@ app.post('/peca', (req, res) => {
     })
 })
 
+app.post('/alerta-estoque', (req, res) => {
+    getAlertaEStoque(req.body).then((response) => {
+        let responseJson = JSON.stringify(response)
+        res.send(responseJson)
+    })
+})
+
 app.post('/editar-produto', (req, res) => {
     editProduto(req.body).then((response) => {
         let responseJson = JSON.stringify(response)
@@ -546,6 +553,14 @@ async function getPeca(cod) {
     const client = new Client(connection)
     await client.connect()
     res = await client.query('SELECT * FROM produtos WHERE id_peca = $1', [cod])
+    await client.end()
+    return res.rows
+}
+
+async function getAlertaEStoque(qnt) {
+    const client = new Client(connection)
+    await client.connect()
+    res = await client.query('SELECT p.peca, p.tamanho, p.quantidade, f.fornecedor FROM produtos p, fornecedores f WHERE quantidade <= $1 AND p.id_fornecedor = f.id ORDER BY p.quantidade', [qnt.qnt])
     await client.end()
     return res.rows
 }

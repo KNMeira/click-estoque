@@ -1,16 +1,74 @@
 <div class="body" [ngClass]="setDarkMode()">
     <!-- <div id="divLogoConsultoria">
         <img id="logoConsultoria" src="./assets/imagens/click-estoque5.png" alt="imagem de bem-vindos">
-     </div> --> 
+     </div> -->
 
-    <div id="divLogoConsultoria" class="row m-0 p-0">
-        <div class="col-6 text-end p-0">
+    <div id="divLogoConsultoria" class="row mt-5 p-0">
+        <div class="col-6 text-end p-0 mt-5">
             <h5 class="welcome-style">BEM-VINDO, </h5>
 
         </div>
-        <div class="col-6 text-start p-0">
+        <div class="col-6 text-start p-0 mt-5">
             <img id="logoConsultoria" src="./assets/imagens/logo-fitness2.png" alt="imagem de bem-vindos">
         </div>
+    </div>
+
+    <div class="text-center mt-5 pt-5 row" *ngIf="itensAlerta.length > 0 && !isLoadingItensAlerta;">
+        <h4 class="text-danger">
+            <i class='bx bxs-error-alt'></i>
+            ALERTA ESTOQUE BAIXO
+            <i class='bx bxs-error-alt'></i>
+
+        </h4>
+
+        <div class="col-4"></div>
+        <div class="col-4">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Tamanho</th>
+                        <th>Fornecedor</th>
+                        <th>Quantidade</th>
+                        <th>            
+                            <i class='bx bxs-cog text-body-tertiary fs-3 action-icon' (click)="openConfigAlerta(!isOpenConfigAlerta)"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itensAlerta">
+                        <td>{{ item.peca }}</td>
+                        <td>{{ item.tamanho.toUpperCase() }}</td>
+                        <td>{{ item.fornecedor }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+
+            </table>           
+        </div>
+
+        <div *ngIf="isOpenConfigAlerta" class="col-4">
+            <div class="m-5 p-3 border border-black bg-light">
+                <p>Mostrar produtos com quantidade menor ou igual a:  </p>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" [ngClass]="qntActive == 3 ? 'active' : '' "  (click)="getAlertaEstoque(3)">3</button>
+                    <button type="button" class="btn btn-secondary" [ngClass]="qntActive == 5 ? 'active' : '' " (click)="getAlertaEstoque(5)">5</button>
+                    <button type="button" class="btn btn-secondary" [ngClass]="qntActive == 7 ? 'active' : '' " (click)="getAlertaEstoque(7)" >7</button>
+                    <button type="button" class="btn btn-secondary" [ngClass]="qntActive == 10 ? 'active' : '' " (click)="getAlertaEstoque(10)">10</button>
+                  </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="isLoadingItensAlerta">
+        <div class="text-center mt-5">
+            <img src="../../../assets/imagens/loading-pulse.gif" width="auto" height="100px" alt="">
+            <p>Carregando</p>
+        </div>
+
     </div>
 
     <div class="row">

@@ -46,4 +46,8 @@ export class EstoqueService {
     public deleteProduto(idPeca: any): Observable<any> {
         return this.httpClient.post<any>(`${this.url}/delete-produto`, {id: idPeca});
     }
+    
+    public getAlertaEstoque(qnt: number): Observable<any> {
+        return this.httpClient.post<any>(`${this.url}/alerta-estoque`, {qnt: qnt});
+    }
 }
