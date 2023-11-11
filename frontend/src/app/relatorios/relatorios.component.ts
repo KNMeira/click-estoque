@@ -107,7 +107,7 @@ export class RelatoriosComponent {
         this.vendasService.getVendasRelatorio(this.formRelatorio.value).subscribe((res) => {
           res = res.map((e: any) => {
             return {
-              data: this.datePipe.transform(new Date(e.date_trunc), 'dd/MM/yyyy'),
+              data: this.datePipe.transform(new Date(e.to_char), 'dd/MM/yyyy'),
               ['valor total']: e.valor_total.replace('$', ''),
               ['valor desconto']: e.valor_desconto.replace('$', ''),
               cliente: e.cliente
