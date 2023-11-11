@@ -14,7 +14,7 @@ export class ListarVendasComponent {
 
 
   public formFiltroVendas: FormGroup = new FormGroup({
-    idCliente: new FormControl('', Validators.required),
+    idCliente: new FormControl(''),
     data: new FormControl(this.datePipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required),
   })
   public vendas: any = [];
@@ -41,6 +41,7 @@ export class ListarVendasComponent {
 
           }
         })
+        
         this.loading = false;
         if (this.vendas.length > 0) {
           this.isVendasLoaded = true;
@@ -49,7 +50,7 @@ export class ListarVendasComponent {
         }
       })
     } else {
-      alert('Preencha os dois campos de filtro para buscar')
+      alert('Preencha a data para buscar')
     }
   }
 

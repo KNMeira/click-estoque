@@ -5,7 +5,7 @@
         <form class="d-flex col-md-8 text-end mt-5" [formGroup]="formFiltroVendas">
             <div class="form-floating">
                 <input class="form-control me-2" type="text" id="pesquisar" placeholder="Pesquisar"
-                    formControlName="idCliente">
+                    formControlName="idCliente"  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
                 <label for="pesquisar"> ID do Cliente:</label>
             </div>
             <div class="form-floating mx-5">

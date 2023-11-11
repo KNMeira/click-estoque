@@ -296,7 +296,13 @@ async function findVendas(venda) {
     let client = new Client(connection)
     await client.connect()
 
-    let res = await client.query(`SELECT v.id_venda, v.valor_total, v.valor_desconto, v.data_venda, v.id_cliente, c.cliente FROM vendas v, clientes c WHERE v.id_cliente = ${venda.idCliente} AND c.id = ${venda.idCliente} AND v.data_venda = '${venda.data}'`)
+    let res;
+    if(venda.idCliente != '') {
+        res = await client.query(`SELECT v.id_venda, v.valor_total, v.valor_desconto, v.data_venda, v.id_cliente, c.cliente FROM vendas v, clientes c WHERE v.id_cliente = ${venda.idCliente} AND c.id = ${venda.idCliente} AND v.data_venda = '${venda.data}'`)
+
+    } else (
+        res = await client.query(`SELECT v.id_venda, v.valor_total, v.valor_desconto, v.data_venda, v.id_cliente, c.cliente FROM vendas v, clientes c WHERE c.id = v.id_cliente AND v.data_venda = '${venda.data}'`)
+    )
 
     let vendas = [];
     if (res.rowCount > 0) {
