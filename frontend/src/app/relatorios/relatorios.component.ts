@@ -88,7 +88,7 @@ export class RelatoriosComponent {
         this.estoqueService.getMovimentacaoEstoque(this.formRelatorio.value).subscribe((res) => {
           res = res.map((e:any) => {
             return {
-              data: this.datePipe.transform(e.data, 'dd/MM/yyyy'),
+              data: this.datePipe.transform(new Date(e.data), 'dd/MM/yyyy'),
               evento: e.evento == 'S' ? 'SAÍDA' : 'ENTRADA',
               produto: e.peca,
               tamanho: e.tamanho.toUpperCase(),
@@ -107,7 +107,7 @@ export class RelatoriosComponent {
         this.vendasService.getVendasRelatorio(this.formRelatorio.value).subscribe((res) => {
           res = res.map((e: any) => {
             return {
-              data: this.datePipe.transform(e.data_venda, 'dd/MM/yyyy'),
+              data: this.datePipe.transform(new Date(e.data_venda), 'dd/MM/yyyy'),
               ['valor total']: e.valor_total.replace('$', ''),
               ['valor desconto']: e.valor_desconto.replace('$', ''),
               cliente: e.cliente
