@@ -252,7 +252,7 @@ async function getVendasLogs(periodo) {
     const values = [periodo.dataInicio, periodo.dataFim];
     const client = new Client(connection)
     await client.connect()
-    res = await client.query('SELECT v.data_venda, v.valor_total, v.valor_desconto, c.cliente FROM vendas v, clientes c WHERE v.data_venda BETWEEN $1 AND $2 AND v.id_cliente = c.id ORDER BY v.data_venda', values)
+    res = await client.query(`SELECT date_trunc('day',v.data_venda), v.valor_total, v.valor_desconto, c.cliente FROM vendas v, clientes c WHERE v.data_venda BETWEEN $1 AND $2 AND v.id_cliente = c.id ORDER BY v.data_venda`, values)
     await client.end()
     return res.rows
 
