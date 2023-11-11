@@ -35,7 +35,7 @@ export class ListarVendasComponent {
           })
           return {
             ...venda,
-            data_venda: this.datePipe.transform(venda.data_venda, 'dd/MM/yyyy'),
+            data_venda: this.datePipe.transform(venda.data_venda, 'dd/MM/yyyy', 'UTC'),
             valor_desconto: venda.valor_desconto.replace('$', 'R$'),
             valor_total: venda.valor_total.replace('$', 'R$'),
 
