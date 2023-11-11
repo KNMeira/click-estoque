@@ -310,14 +310,13 @@ async function findVendas(venda) {
             let detalhe = res.rows;
             return {
                 ...venda,
+                data_venda: new Date(venda.data_venda),
                 detalheVenda: detalhe
             }
         })
     }
 
     vendas = await Promise.all(vendas)
-    console.log(vendas);
-
     return vendas;
 
 }
