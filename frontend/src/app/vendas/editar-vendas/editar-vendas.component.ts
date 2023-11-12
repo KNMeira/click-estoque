@@ -166,7 +166,8 @@ export class EditarVendasComponent {
   public setValor(event: any, i: number) {
     let valor = this.pecas.find((x: any) => x.id == event.target.value).valor;
     this.Produtos.at(i).get('valorPeca')?.setValue(valor);
-
+    this.Produtos.at(i).get('quantidade')?.setValue(0);
+    this.calcularTotalProduto(i)
   }
 
   public calcularTotalProduto(i: number) {
