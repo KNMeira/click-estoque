@@ -43,6 +43,10 @@ export class RelatoriosComponent {
     switch (tipoRelatorio) {
       case 'usuarios':
         this.usuariosService.getAllUsuarios().subscribe((res: any) => {
+          res.map((x: any) => {
+            delete x.senha
+          });
+          
           this.table = res
           this.showTable = true
         });
