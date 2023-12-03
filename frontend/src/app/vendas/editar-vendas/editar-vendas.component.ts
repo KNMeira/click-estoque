@@ -63,6 +63,9 @@ export class EditarVendasComponent {
     })      
 
     if (this.vendaEdit != undefined) {
+    
+      this.formPesquisarVenda.patchValue({id: this.vendaEdit.id_venda})
+      
       this.vendaEdit = {
           idCliente: this.vendaEdit.id_cliente,
           valorDesconto: this.vendaEdit.valor_desconto.replace('R$', '').replace(',', ''),
@@ -195,7 +198,7 @@ export class EditarVendasComponent {
     this.isLoadingEdit = true;
     const venda = {
       ...this.formVendasEdit.getRawValue(),
-      idVenda: this.formPesquisarVenda.get('id')?.value
+      idVenda: this.formPesquisarVenda.get('id')?.value 
     };    
 
     this.vendasService.editVenda(venda).subscribe((res) => {
